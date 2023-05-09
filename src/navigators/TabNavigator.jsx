@@ -15,7 +15,7 @@ import {
   ROUTE_GROUPS_SCREEN,
   ROUTE_HOME_SCREEN,
   ROUTE_NOTIFICATIONS_SCREEN,
-  ROUTE_PROFILE_SCREEN
+  ROUTE_PROFILE_SCREEN,
 } from "./RouteNames";
 
 const Tab = createBottomTabNavigator();
