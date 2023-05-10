@@ -16,7 +16,9 @@ const FeedOption = ({ style, imageIcon, label, onPress }) => {
   return (
     <Pressable style={[styles.container, style]} onPress={onPress}>
       <Image source={imageIcon} />
-      <Typography style={styles.label}>{label}</Typography>
+      <Typography style={styles.label} numberOfLine={1} elispMode="tail">
+        {label}
+      </Typography>
     </Pressable>
   );
 };
@@ -29,6 +31,7 @@ const styles = StyleSheet.create({
   label: {
     color: Colors.white,
     marginVertical: 8,
+    textAlign: "center",
   },
 });
 

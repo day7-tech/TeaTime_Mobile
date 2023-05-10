@@ -28,7 +28,7 @@ const FeedDetails = ({
 }) => {
   return (
     <View style={[styles.container, style]}>
-      <View style={{ flex: 4 }}>
+      <View style={{ flex: 6 }}>
         {isFavourites ? (
           <ChannelAndUploaderDetails
             channelImage={item.channel.image}

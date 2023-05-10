@@ -5,3 +5,6 @@ export const ROUTE_GROUPS_SCREEN = "groups_screen";
 export const ROUTE_ADD_CONTENT = "add_content";
 export const ROUTE_PROFILE_SCREEN = "profile_screen";
 export const ROUTE_NOTIFICATIONS_SCREEN = "notifications_screen";
+export const ROUTE_RECOGNITION_STACK_NAVIGATOR = "recognition_stack_navigator";
+export const ROUTE_RECOGNITION_STICKER_SCREEN = "recognition_sticker_screen";
+export const ROUTE_RECOGNITION_SUCCESS_SCREEN = "recognition_success_screen";

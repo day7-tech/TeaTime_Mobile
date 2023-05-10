@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useCallback, useState } from "react";
 import BottomModal from "../../../components/BottomModal";
 import Typography from "../../../components/Typography/Typography";
@@ -13,6 +13,8 @@ const RecognitionStickersModal = ({
   recognitionModalRef,
   postDetails,
   stickers,
+  onSendStickerPress,
+  onModalClose,
 }) => {
   const [selectedSticker, setSelectedSticker] = useState(null);
   const send = useCallback(() => {
@@ -27,10 +29,8 @@ const RecognitionStickersModal = ({
         bottomOffset: 40,
       });
     }
-    setIsRecognitionPanelVisible(false);
-
-    sendSticker(selectedSticker);
-  }, []);
+    onSendStickerPress(selectedSticker);
+  }, [selectedSticker]);
   return (
     <BottomModal
       bottomSheetModalRef={recognitionModalRef}

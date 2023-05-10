@@ -7,4 +7,5 @@ export const Colors = {
   whiteOpacity60: "#FFFFFF99",
   transparent: "transparent",
   darkGrey: "#474747",
+  lightGrey: "#848484",
 };
