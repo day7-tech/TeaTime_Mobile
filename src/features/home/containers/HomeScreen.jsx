@@ -1,10 +1,19 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useCallback } from "react";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SceneMap, TabView } from "react-native-tab-view";
 import { SCREEN_WIDTH } from "../../../utils/constants";
 import { Colors } from "../../../utils/styles";
 import Favourites from "./Favourites";
 import Moments from "./Moments";
+import SearchIcon from "./../../../../assets/images/search.png";
+import Typography from "../../../components/Typography/Typography";
 const FirstRoute = () => <Moments />;
 
 const SecondRoute = () => <Favourites />;
@@ -31,17 +40,19 @@ const HomeScreen = () => {
               style={[styles.tabItem, isSelected && styles.selectedTabItem]}
               onPress={() => setIndex(i)}
             >
-              <Text
+              <Typography
                 style={[styles.tabBarText, isSelected && styles.selectedText]}
               >
                 {route.title}
-              </Text>
+              </Typography>
             </TouchableOpacity>
           );
         })}
       </View>
     );
   };
+
+  const onSearchPress = useCallback(() => {}, []);
 
   return (
     <View style={styles.container}>
@@ -53,9 +64,9 @@ const HomeScreen = () => {
         renderTabBar={renderTabBar}
         lazy={false}
       />
-      {/* <Pressable style={styles.searchIcon} onPress={onSearchPress}>
+      <Pressable style={styles.searchIcon} onPress={onSearchPress}>
         <Image source={SearchIcon} />
-      </Pressable> */}
+      </Pressable>
     </View>
   );
 };
@@ -80,8 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.whiteOpacity60,
   },
   tabItem: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingHorizontal: 18,
+    paddingVertical: 12,
     borderRadius: 25,
   },
   searchIcon: {
@@ -91,6 +102,7 @@ const styles = StyleSheet.create({
   },
   tabBarText: {
     color: Colors.white,
+    fontSize: 16,
   },
   selectedText: {
     color: Colors.black,

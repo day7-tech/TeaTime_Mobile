@@ -12,14 +12,12 @@ const ChannelAndUploaderDetails = ({
   return (
     <Pressable style={styles.channelDetailsContainer}>
       <View style={styles.userDetails}>
-        <Image source={{ uri: channelImage }} style={styles.channelImage} />
         <Image source={{ uri: uploaderImage }} style={styles.uploaderImage} />
+        <Image source={{ uri: channelImage }} style={styles.channelImage} />
       </View>
       <View>
+        <Typography style={styles.uploaderName}>{uploaderName}</Typography>
         <Typography style={styles.channelName}>{channelName}</Typography>
-        <Typography style={styles.uploaderName}>
-          Posted by {uploaderName}
-        </Typography>
       </View>
     </Pressable>
   );
@@ -29,19 +27,6 @@ export default ChannelAndUploaderDetails;
 
 const styles = StyleSheet.create({
   channelImage: {
-    marginRight: 15,
-    width: 55,
-    height: 55,
-    borderRadius: 55,
-  },
-  uploaderName: {
-    color: Colors.white,
-  },
-  channelDetailsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  uploaderImage: {
     width: 26,
     height: 26,
     borderRadius: 26,
@@ -49,9 +34,23 @@ const styles = StyleSheet.create({
     bottom: -2,
     right: 5,
   },
-  channelName: {
+  uploaderName: {
     fontWeight: "bold",
     color: Colors.white,
-    paddingBottom: 3,
+    paddingBottom: 5,
+  },
+  channelDetailsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  uploaderImage: {
+    marginRight: 15,
+    width: 55,
+    height: 55,
+    borderRadius: 55,
+  },
+  channelName: {
+    color: Colors.white,
+    lineHeight: 14,
   },
 });

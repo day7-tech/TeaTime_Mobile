@@ -1,9 +1,12 @@
+import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import ModalNavigator from "./src/navigators/ModalNavigator";
 import { isLoaded, useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,9 +26,14 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <View style={styles.container} onLayout={handleOnLayout}>
-      <ModalNavigator />
-    </View>
+    <BottomSheetModalProvider>
+      <GestureHandlerRootView
+        style={styles.container}
+        onLayout={handleOnLayout}
+      >
+        <ModalNavigator />
+      </GestureHandlerRootView>
+    </BottomSheetModalProvider>
   );
 }
 
