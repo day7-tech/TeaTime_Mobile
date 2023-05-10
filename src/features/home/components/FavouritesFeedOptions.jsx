@@ -9,6 +9,7 @@ import CommentedIcon from "../../../../assets/images/commented.png";
 import ReplyIcon from "../../../../assets/images/reply.png";
 import FeedOption from "../../../components/FeedOption";
 
+// FavouritesFeedOptions: Component for displaying feed options in the Favourites screen
 const FavouritesFeedOptions = ({
   item,
   defaultLikes,
@@ -18,35 +19,43 @@ const FavouritesFeedOptions = ({
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(item.likeCount);
 
+  // Handle the press event for the Like button
   const onLikePress = useCallback(() => {
     setLikeCount((prevCount) => (like ? prevCount - 1 : prevCount + 1));
     setLike((prevLike) => !prevLike);
   }, [like]);
 
   useEffect(() => {
+    // Update the initial state based on the provided props
     setLike(isLiked ?? false);
     setLikeCount(defaultLikes ?? item.likeCount);
   }, [isLiked, defaultLikes]);
 
-  const onSharePress = useCallback(() => {}, []);
+  const onSharePress = useCallback(() => {
+    // Handle the press event for the Share button
+  }, []);
 
   return (
     <View style={styles.container}>
+      {/* Thanks Option */}
       <FeedOption
         label={"Thanks"}
         imageIcon={ThanksIcon}
         onPress={onThanksPress}
       />
+      {/* Like Option */}
       <FeedOption
         label={likeCount}
         imageIcon={like ? LikedIcon : LikeIcon}
         onPress={onLikePress}
       />
+      {/* Comments Option */}
       <FeedOption
         label={"Comments"}
         imageIcon={CommentsIcon}
         onPress={onLikePress}
       />
+      {/* Reply Option */}
       <FeedOption
         label={"Reply"}
         imageIcon={ReplyIcon}

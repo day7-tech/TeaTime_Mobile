@@ -11,8 +11,12 @@ import {
   CardStyleInterpolators,
   TransitionPresets,
 } from "@react-navigation/stack";
+
 const Stack = createNativeStackNavigator();
 
+// RecogniseStackNavigator component
+// Renders a stack navigator with screens for recognition sticker and success
+// Returns: a stack navigator for recognition screens
 const RecogniseStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

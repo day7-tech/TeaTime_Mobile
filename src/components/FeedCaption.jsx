@@ -1,14 +1,24 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import Typography from "./Typography/Typography";
 import { Colors } from "../utils/styles";
 
+/**
+ * Component that displays the caption for a feed.
+ * @param {string} caption - The caption to be displayed.
+ * @returns {JSX.Element} - The FeedCaption component.
+ */
 const FeedCaption = ({ caption }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  /**
+   * Handles the press event on the caption.
+   * Toggles the isExpanded state.
+   */
   const handleCaptionPress = () => {
     setIsExpanded((prev) => !prev);
   };
+
   return (
     <TouchableOpacity
       onPress={handleCaptionPress}

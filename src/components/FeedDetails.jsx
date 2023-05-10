@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React from "react";
 import {
   Image,
   ImageSourcePropType,
@@ -17,6 +17,17 @@ import ChannelDetails from "./ChannelDetails";
 import ChannelAndUploaderDetails from "./ChannelAndUploaderDetails";
 import FavouritesFeedOptions from "../features/home/components/FavouritesFeedOptions";
 
+/**
+ * Component that displays the details of a feed item.
+ * @param {StyleProp<ViewStyle>} style - Additional styles to apply to the container.
+ * @param {object} item - The feed item data.
+ * @param {Function} onUserDetailsPress - Function to handle the press event on the user details.
+ * @param {number} defaultLikes - The default number of likes.
+ * @param {boolean} isLiked - Indicates whether the item is liked.
+ * @param {boolean} isFavourites - Indicates whether the item is in the favorites feed.
+ * @param {Function} onThanksPress - Function to handle the press event on the thanks button.
+ * @returns {JSX.Element} - The FeedDetails component.
+ */
 const FeedDetails = ({
   style,
   item,
@@ -29,6 +40,7 @@ const FeedDetails = ({
   return (
     <View style={[styles.container, style]}>
       <View style={{ flex: 6 }}>
+        {/* Render channel and uploader details based on whether it is in favorites */}
         {isFavourites ? (
           <ChannelAndUploaderDetails
             channelImage={item.channel.image}
@@ -46,6 +58,7 @@ const FeedDetails = ({
         )}
         <FeedCaption caption={item.description} />
       </View>
+      {/* Render feed options based on whether it is in favorites */}
       {isFavourites ? (
         <FavouritesFeedOptions
           item={item}

@@ -14,24 +14,31 @@ import Favourites from "./Favourites";
 import Moments from "./Moments";
 import SearchIcon from "./../../../../assets/images/search.png";
 import Typography from "../../../components/Typography/Typography";
-const FirstRoute = () => <Moments />;
 
+// Create two components to render as the two tabs
+const FirstRoute = () => <Moments />;
 const SecondRoute = () => <Favourites />;
+
 const HomeScreen = () => {
+  // Set up state to track the selected tab
   const [index, setIndex] = React.useState(0);
+  // Define an array of route objects, one for each tab
   const [routes] = React.useState([
     { key: "favourites", title: "Favourites" },
     { key: "moments", title: "Moments" },
   ]);
 
+  // Define a function to render the appropriate tab component based on the current index
   const renderScene = SceneMap({
     moments: FirstRoute,
     favourites: SecondRoute,
   });
 
+  // Define a function to render the tab bar
   const renderTabBar = (props) => {
     return (
       <View style={styles.tabBar}>
+        {/* Map over each route object and create a tab item */}
         {props.navigationState.routes.map((route, i) => {
           const isSelected = props.navigationState.index === i;
           return (
@@ -40,6 +47,7 @@ const HomeScreen = () => {
               style={[styles.tabItem, isSelected && styles.selectedTabItem]}
               onPress={() => setIndex(i)}
             >
+              {/* Render the title of the tab */}
               <Typography
                 style={[styles.tabBarText, isSelected && styles.selectedText]}
               >
@@ -52,10 +60,12 @@ const HomeScreen = () => {
     );
   };
 
+  // Define a callback function for when the search icon is pressed
   const onSearchPress = useCallback(() => {}, []);
 
   return (
     <View style={styles.container}>
+      {/* Render the tab view */}
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
@@ -64,6 +74,7 @@ const HomeScreen = () => {
         renderTabBar={renderTabBar}
         lazy={false}
       />
+      {/* Render the search icon */}
       <Pressable style={styles.searchIcon} onPress={onSearchPress}>
         <Image source={SearchIcon} />
       </Pressable>
@@ -71,8 +82,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
-
+// Define styles for the component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -108,3 +118,5 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
 });
+
+export default HomeScreen;

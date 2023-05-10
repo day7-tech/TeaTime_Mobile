@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { StyleSheet } from "react-native";
 import TabBarOption from "../components/TabBarOption";
 import Typography from "../components/Typography/Typography";
 import HomeScreen from "../features/home/containers/HomeScreen";
@@ -19,6 +18,8 @@ import {
 } from "./RouteNames";
 
 const Tab = createBottomTabNavigator();
+
+// TabNavigator: Manages the bottom tab navigation in the app
 const TabNavigator = () => {
   return (
     <Tab.Navigator
@@ -37,6 +38,7 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: Colors.white,
       })}
     >
+      {/* Home Tab */}
       <Tab.Screen
         component={HomeScreen}
         name={ROUTE_HOME_SCREEN}
@@ -50,6 +52,8 @@ const TabNavigator = () => {
           ),
         }}
       />
+
+      {/* Groups Tab */}
       <Tab.Screen
         component={HomeScreen}
         name={ROUTE_GROUPS_SCREEN}
@@ -64,6 +68,8 @@ const TabNavigator = () => {
           ),
         }}
       />
+
+      {/* Add Content Tab */}
       <Tab.Screen
         component={HomeScreen}
         name={ROUTE_ADD_CONTENT}
@@ -72,6 +78,8 @@ const TabNavigator = () => {
           tabBarIcon: () => <TabBarOption imageIcon={AddIcon} />,
         }}
       />
+
+      {/* Profile Tab */}
       <Tab.Screen
         component={HomeScreen}
         name={ROUTE_PROFILE_SCREEN}
@@ -86,6 +94,8 @@ const TabNavigator = () => {
           ),
         }}
       />
+
+      {/* Notifications Tab */}
       <Tab.Screen
         component={HomeScreen}
         name={ROUTE_NOTIFICATIONS_SCREEN}
@@ -105,5 +115,3 @@ const TabNavigator = () => {
 };
 
 export default TabNavigator;
-
-const styles = StyleSheet.create({});

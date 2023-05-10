@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import {
   Image,
   ImageSourcePropType,
@@ -12,11 +12,19 @@ import {
 import { Colors } from "../utils/styles";
 import Typography from "./Typography/Typography";
 
+/**
+ * Component representing a feed option.
+ * @param {StyleProp<ViewStyle>} style - Additional styles to apply to the container.
+ * @param {ImageSourcePropType} imageIcon - The image icon for the feed option.
+ * @param {string} label - The label text for the feed option.
+ * @param {Function} onPress - Function to handle the press event.
+ * @returns {JSX.Element} - The FeedOption component.
+ */
 const FeedOption = ({ style, imageIcon, label, onPress }) => {
   return (
     <Pressable style={[styles.container, style]} onPress={onPress}>
       <Image source={imageIcon} />
-      <Typography style={styles.label} numberOfLine={1} elispMode="tail">
+      <Typography style={styles.label} numberOfLines={1} ellipsizeMode="tail">
         {label}
       </Typography>
     </Pressable>

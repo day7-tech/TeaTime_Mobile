@@ -1,8 +1,16 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import React from "react";
 import Typography from "./Typography/Typography";
 import { Colors } from "../utils/styles";
 
+/**
+ * Component that displays channel and uploader details.
+ * @param {string} channelImage - The URI of the channel image.
+ * @param {string} channelName - The name of the channel.
+ * @param {string} uploaderImage - The URI of the uploader image.
+ * @param {string} uploaderName - The name of the uploader.
+ * @returns {JSX.Element} - The ChannelAndUploaderDetails component.
+ */
 const ChannelAndUploaderDetails = ({
   channelImage,
   channelName,

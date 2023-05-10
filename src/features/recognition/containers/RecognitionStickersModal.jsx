@@ -1,13 +1,12 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useCallback, useState } from "react";
-import BottomModal from "../../../components/BottomModal";
-import Typography from "../../../components/Typography/Typography";
-import UserCard from "../../../components/UserCard/UserCard";
-import Stickers from "../../../utils/Stickers";
-import StickerSelectionGrid from "../../../components/StickerSelectionGrid/StickerSelectionGrid";
-import GradientBtn from "../../../components/Buttons/GradientBtn";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import Toast from "react-native-toast-message";
+import BottomModal from "../../../components/BottomModal";
+import GradientBtn from "../../../components/Buttons/GradientBtn";
+import StickerSelectionGrid from "../../../components/StickerSelectionGrid/StickerSelectionGrid";
+import Typography from "../../../components/Typography/Typography";
+import UserCard from "../../../components/UserCard/UserCard";
 
 const RecognitionStickersModal = ({
   recognitionModalRef,
@@ -17,8 +16,11 @@ const RecognitionStickersModal = ({
   onModalClose,
 }) => {
   const [selectedSticker, setSelectedSticker] = useState(null);
+
+  // Function to handle the send button press
   const send = useCallback(() => {
     if (!selectedSticker) {
+      // Display an error toast if no sticker is selected
       return Toast.show({
         type: "error",
         text1: "Please select a sticker to continue!",
@@ -31,6 +33,7 @@ const RecognitionStickersModal = ({
     }
     onSendStickerPress(selectedSticker);
   }, [selectedSticker]);
+
   return (
     <BottomModal
       bottomSheetModalRef={recognitionModalRef}

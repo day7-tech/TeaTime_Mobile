@@ -1,16 +1,22 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useMemo } from "react";
-import { BottomSheet } from "react-native-btr";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import { Colors } from "../utils/styles";
+import React, { useCallback } from "react";
+import { StyleSheet } from "react-native";
 import { getBottomSpace } from "react-native-iphone-x-helper";
-import Typography from "./Typography/Typography";
 import { HORIZONTAL_MARGIN } from "../utils/constants";
+import { Colors } from "../utils/styles";
 
+/**
+ * Component that represents a bottom modal.
+ * @param {ReactNode} children - The content of the modal.
+ * @param {object} bottomSheetModalRef - The reference to the bottom sheet modal.
+ * @param {Function} onClose - The function to be called when the modal is closed.
+ * @param {object} containerStyle - The additional styles to apply to the container.
+ * @returns {JSX.Element} - The BottomModal component.
+ */
 const BottomModal = ({
   children,
   bottomSheetModalRef,
@@ -18,6 +24,12 @@ const BottomModal = ({
   containerStyle,
 }) => {
   const snapPoints = ["80%"];
+
+  /**
+   * Renders the backdrop for the bottom modal.
+   * @param {object} props - The props passed to the backdrop component.
+   * @returns {JSX.Element} - The rendered backdrop component.
+   */
   const renderBackdrop = useCallback(
     (props) => (
       <BottomSheetBackdrop

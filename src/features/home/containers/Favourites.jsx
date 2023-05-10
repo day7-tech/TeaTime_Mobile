@@ -11,8 +11,11 @@ const Favourites = () => {
   const scrollOffsetRef = useRef(0);
   const tabBarHeight = useBottomTabBarHeight();
 
+  /**
+   * Load more videos.
+   * Generates additional video posts and appends them to the current list.
+   */
   const loadMoreVideos = () => {
-    // Generate additional video posts and append them to the current list
     const newVideos = [
       ...videos,
       ...generateDummyVideoPosts(videos.length, videos.length + 10),
@@ -20,6 +23,11 @@ const Favourites = () => {
     setVideos(newVideos);
   };
 
+  /**
+   * Render video item.
+   * @param {object} item - Video item.
+   * @returns {JSX.Element} - Rendered video component.
+   */
   const renderVideo = ({ item }) => {
     return <Feed item={item} isFavourites={true} />;
   };
@@ -43,5 +51,3 @@ const Favourites = () => {
 };
 
 export default Favourites;
-
-const styles = StyleSheet.create({});

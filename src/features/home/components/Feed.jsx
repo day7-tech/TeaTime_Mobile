@@ -26,9 +26,17 @@ import { useNavigation } from "@react-navigation/native";
 import {
   ROUTE_RECOGNITION_STACK_NAVIGATOR,
   ROUTE_RECOGNITION_STICKER_SCREEN,
+  ROUTE_USER_DETAILS,
+  ROUTE_USER_DETAILS_STACK_NAVIGATOR,
 } from "../../../navigators/RouteNames";
 import { ROUTE_AUTHENTICATED_NAVIGATOR } from "../../../navigators/RouteNames";
 
+/**
+ * Feed: Component for displaying a feed item.
+ *
+ * @param {object} item - The feed item object.
+ * @param {boolean} isFavourites - Indicates if the feed item is in favorites.
+ */
 const Feed = ({ item, isFavourites }) => {
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -37,12 +45,19 @@ const Feed = ({ item, isFavourites }) => {
   const doubleTapRef = useRef(null);
   const doubleTapTimerRef = useRef(null);
 
+  // Get the height of the bottom tab bar
   const tabBarHeight = useBottomTabBarHeight();
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const recognitionModalRef = useRef(null);
 
   const lastTapRef = useRef(null);
+
+  /**
+   * Handle double tap event.
+   * If the user taps twice within a certain delay, it triggers a double tap.
+   * Otherwise, it triggers a single tap.
+   */
   const handleDoubleTap = useCallback(() => {
     const now = Date.now();
 
@@ -60,6 +75,10 @@ const Feed = ({ item, isFavourites }) => {
     }
   }, [handleLike]);
 
+  /**
+   * Handle the Like button press.
+   * It toggles the like status and updates the like count accordingly.
+   */
   const handleLike = useCallback(() => {
     setLike((prevLike) => {
       const newLike = !prevLike;
@@ -68,19 +87,37 @@ const Feed = ({ item, isFavourites }) => {
     });
   }, []);
 
+  /**
+   * Handle the Play/Pause button press.
+   * It toggles the video playback state.
+   */
   const handlePlayPause = useCallback(() => {
     setIsPlaying((prev) => !prev);
   }, []);
 
+  /**
+   * Handle the video load event.
+   * Sets the video as loaded and starts playing.
+   */
   const handleVideoLoad = useCallback(() => {
     setIsVideoLoaded(true);
     setIsPlaying(true);
   }, []);
 
+  /**
+   * Handle the Thanks button press.
+   * Opens the recognition modal.
+   */
   const onThanksPress = useCallback(() => {
     recognitionModalRef?.current?.present();
   }, []);
 
+  /**
+   * Handle the Send Sticker button press.
+   * Navigates to the recognition sticker screen.
+   *
+   * @param {string} sticker - The selected sticker.
+   */
   const onSendStickerPress = useCallback((sticker) => {
     onModalClose();
     setTimeout(() => {
@@ -97,12 +134,29 @@ const Feed = ({ item, isFavourites }) => {
     }, 500);
   }, []);
 
+  /**
+   * Handle the User Details button press.
+   * Navigates to the user details screen.
+   */
+  const onUserDetailsPress = useCallback(() => {
+    navigation.navigate(ROUTE_AUTHENTICATED_NAVIGATOR, {
+      screen: ROUTE_USER_DETAILS_STACK_NAVIGATOR,
+      params: {
+        screen: ROUTE_USER_DETAILS,
+        params: {
+          userDetails: item,
+        },
+      },
+    });
+  }, []);
+
   const onModalClose = useCallback(() => {
     recognitionModalRef?.current?.close();
   }, []);
 
   return (
     <View style={[styles.container, { height: SCREEN_HEIGHT - tabBarHeight }]}>
+      {/* Touchable video wrapper */}
       <TouchableOpacity
         activeOpacity={1}
         onPress={handleDoubleTap}
@@ -112,6 +166,7 @@ const Feed = ({ item, isFavourites }) => {
           { height: SCREEN_HEIGHT - tabBarHeight, width: SCREEN_WIDTH },
         ]}
       >
+        {/* Video component */}
         <Video
           ref={videoRef}
           source={{ uri: item.uri }}
@@ -124,6 +179,7 @@ const Feed = ({ item, isFavourites }) => {
           volume={0.9}
         />
       </TouchableOpacity>
+      {/* Feed details section */}
       <View style={styles.postDetails}>
         <FeedDetails
           item={item}
@@ -131,8 +187,10 @@ const Feed = ({ item, isFavourites }) => {
           isLiked={like}
           isFavourites={isFavourites}
           onThanksPress={onThanksPress}
+          onUserDetailsPress={onUserDetailsPress}
         />
       </View>
+      {/* Recognition stickers modal */}
       <RecognitionStickersModal
         recognitionModalRef={recognitionModalRef}
         postDetails={item}
