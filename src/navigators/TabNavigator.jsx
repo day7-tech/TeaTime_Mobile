@@ -32,6 +32,7 @@ const TabNavigator = () => {
           justifyContent: "center",
           alignItems: "center",
           paddingHorizontal: 3,
+          paddingTop: 10
         },
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: Colors.white,
@@ -43,7 +44,7 @@ const TabNavigator = () => {
         options={{
           headerShown: false,
           tabBarLabel: ({ color }) => (
-            <Typography style={{ color: color, fontSize: 12 }}>Home</Typography>
+            <Typography style={{ color: color, fontSize: 10 }}>Home</Typography>
           ),
           tabBarIcon: ({ color }) => (
             <TabBarOption imageIcon={HomeIcon} color={color} />
@@ -55,7 +56,7 @@ const TabNavigator = () => {
         name={ROUTE_GROUPS_SCREEN}
         options={{
           tabBarLabel: ({ color }) => (
-            <Typography style={{ color: color, fontSize: 12 }}>
+            <Typography style={{ color: color, fontSize: 10 }}>
               Groups
             </Typography>
           ),
@@ -74,29 +75,29 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         component={HomeScreen}
-        name={ROUTE_PROFILE_SCREEN}
-        options={{
-          tabBarLabel: ({ color }) => (
-            <Typography style={{ color: color, fontSize: 12 }}>
-              Profile
-            </Typography>
-          ),
-          tabBarIcon: ({ color }) => (
-            <TabBarOption imageIcon={ProfileIcon} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        component={HomeScreen}
         name={ROUTE_NOTIFICATIONS_SCREEN}
         options={{
           tabBarLabel: ({ color }) => (
-            <Typography style={{ color: color, fontSize: 12 }}>
+            <Typography style={{ color: color, fontSize: 10 }}>
               Notifications
             </Typography>
           ),
           tabBarIcon: ({ color }) => (
             <TabBarOption imageIcon={BellIcon} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        component={HomeScreen}
+        name={ROUTE_PROFILE_SCREEN}
+        options={{
+          tabBarLabel: ({ color }) => (
+            <Typography style={{ color: color, fontSize: 10 }}>
+              Profile
+            </Typography>
+          ),
+          tabBarIcon: ({ color }) => (
+            <TabBarOption imageIcon={ProfileIcon} color={color} />
           ),
         }}
       />

@@ -24,6 +24,7 @@ const FavouritesFeedOptions = ({ item, defaultLikes, isLiked }) => {
   }, [isLiked, defaultLikes]);
 
   const onSharePress = useCallback(() => {}, []);
+  const onCommentPress = useCallback(() => {}, []);
 
   return (
     <View style={styles.container}>
@@ -39,8 +40,8 @@ const FavouritesFeedOptions = ({ item, defaultLikes, isLiked }) => {
       />
       <FeedOption
         label={"Comments"}
-        imageIcon={like ? CommentedIcon : CommentsIcon}
-        onPress={onLikePress}
+        imageIcon={CommentsIcon}
+        onPress={onCommentPress}
       />
       <FeedOption
         label={"Reply"}
