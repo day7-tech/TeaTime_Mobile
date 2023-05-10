@@ -9,7 +9,12 @@ import CommentedIcon from "../../../../assets/images/commented.png";
 import ReplyIcon from "../../../../assets/images/reply.png";
 import FeedOption from "../../../components/FeedOption";
 
-const FavouritesFeedOptions = ({ item, defaultLikes, isLiked }) => {
+const FavouritesFeedOptions = ({
+  item,
+  defaultLikes,
+  isLiked,
+  onThanksPress,
+}) => {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(item.likeCount);
 
@@ -30,7 +35,7 @@ const FavouritesFeedOptions = ({ item, defaultLikes, isLiked }) => {
       <FeedOption
         label={"Thanks"}
         imageIcon={ThanksIcon}
-        onPress={onSharePress}
+        onPress={onThanksPress}
       />
       <FeedOption
         label={likeCount}
@@ -39,7 +44,7 @@ const FavouritesFeedOptions = ({ item, defaultLikes, isLiked }) => {
       />
       <FeedOption
         label={"Comments"}
-        imageIcon={like ? CommentedIcon : CommentsIcon}
+        imageIcon={CommentsIcon}
         onPress={onLikePress}
       />
       <FeedOption
