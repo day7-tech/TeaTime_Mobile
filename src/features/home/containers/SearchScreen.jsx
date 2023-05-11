@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   FlatList,
   Image,
@@ -8,21 +8,37 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Back from "../../../components/Navigation/Back";
-import SearchBar from "../../../components/SearchBar";
-import { HORIZONTAL_MARGIN } from "../../../utils/constants";
-import HistoryRow from "../components/HistoryRow";
 import BackIcon from "../../../../assets/images/back.png";
+import ChannelDetails from "../../../components/ChannelDetails";
+import SearchBar from "../../../components/SearchBar";
+import { generateDummyVideoPosts } from "../../../services/generateRandomContent";
+import { HORIZONTAL_MARGIN } from "../../../utils/constants";
+import { Colors } from "../../../utils/styles";
+import HistoryRow from "../components/HistoryRow";
 
 const SearchScreen = ({ navigation }) => {
+  const [searchText, setSearchText] = useState("");
+  const [videos, setVideos] = useState(() => generateDummyVideoPosts(10));
   const onBackPress = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
-  const renderItem = useCallback(({ item }) => {
+  const renderHistoryItem = useCallback(({ item, index }) => {
     return (
-      <View>
+      <View key={index}>
         <HistoryRow searchedText={"Bloom aged care"} />
+      </View>
+    );
+  }, []);
+
+  const renderSearchItem = useCallback(({ item, index }) => {
+    return (
+      <View key={index} style={styles.searchResultContainer}>
+        <ChannelDetails
+          channelName={item.uploader.name}
+          channelImage={item.uploader.image}
+          textStyle={styles.textStyle}
+        />
       </View>
     );
   }, []);
@@ -34,13 +50,18 @@ const SearchScreen = ({ navigation }) => {
           <TouchableOpacity onPress={onBackPress} style={styles.back}>
             <Image source={BackIcon} style={styles.icon} />
           </TouchableOpacity>
-          <SearchBar style={styles.searchBarContainer} />
+          <SearchBar
+            style={styles.searchBarContainer}
+            searchText={searchText}
+            setSearchText={setSearchText}
+          />
         </View>
         <FlatList
-          data={[1, 2, 3]}
-          keyExtractor={(item) => item.toString()}
-          renderItem={renderItem}
+          data={videos}
+          keyExtractor={(item) => item.commentCount.toString()}
+          renderItem={searchText ? renderSearchItem : renderHistoryItem}
           style={styles.flatlistContainer}
+          extraData={videos}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -70,6 +91,13 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+  },
+  textStyle: {
+    color: Colors.black,
+  },
+  searchResultContainer: {
+    flex: 1,
+    marginVertical: 8,
   },
 });
 

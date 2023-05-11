@@ -10,11 +10,13 @@ import { Colors } from "../utils/styles";
  * @param {string} channelName - The name of the channel.
  * @returns {JSX.Element} - The ChannelDetails component.
  */
-const ChannelDetails = ({ onPress, channelImage, channelName }) => {
+const ChannelDetails = ({ onPress, channelImage, channelName, textStyle }) => {
   return (
     <Pressable style={styles.channelDetailsContainer} onPress={onPress}>
       <Image source={{ uri: channelImage }} style={styles.channelImage} />
-      <Typography style={styles.channelName}>{channelName}</Typography>
+      <Typography style={[styles.channelName, textStyle]}>
+        {channelName}
+      </Typography>
     </Pressable>
   );
 };
