@@ -29,7 +29,7 @@ const TabNavigator = () => {
           width: "100%",
         },
         tabBarStyle: {
-          backgroundColor: Colors.blackOpacity,
+          backgroundColor: Colors.black,
           justifyContent: "center",
           alignItems: "center",
           paddingHorizontal: 3,

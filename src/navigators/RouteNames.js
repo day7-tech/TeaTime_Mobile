@@ -13,3 +13,4 @@ export const ROUTE_USER_DETAILS = "user_details";
 export const ROUTE_USER_DETAILS_STACK_NAVIGATOR =
   "user_details_stack_navigator";
 export const ROUTE_SEARCH_SCREEN = "search_screen";
+export const ROUTE_USER_POST_DETAILS = "user_post_details";

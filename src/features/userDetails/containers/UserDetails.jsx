@@ -1,13 +1,14 @@
 import {
   FlatList,
   Image,
+  Pressable,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import {
   generateDummyVideoPosts,
   lorem,
@@ -16,6 +17,7 @@ import MoreIcon from "../../../../assets/images/more-vertical.png";
 import Typography from "../../../components/Typography/Typography";
 import { Colors } from "../../../utils/styles";
 import { ResizeMode } from "expo-av";
+import { ROUTE_USER_POST_DETAILS } from "../../../navigators/RouteNames";
 
 /**
  * Component that displays user details and their uploaded videos.
@@ -41,17 +43,24 @@ const UserDetails = ({ route, navigation }) => {
     });
   }, []);
 
+  const onPostPress = useCallback((item) => {
+    navigation.navigate(ROUTE_USER_POST_DETAILS, { item });
+  }, []);
+
   /**
    * Component that renders a video thumbnail.
    * @param {string} thumbnailUri - The URI of the video thumbnail.
    * @returns {JSX.Element} - The VideoThumbnail component.
    */
-  const VideoThumbnail = ({ thumbnailUri }) => {
+  const VideoThumbnail = ({ thumbnailUri, item }) => {
     const [, setIsLoaded] = useState(false);
     const [, setLoadError] = useState(false);
 
     return (
-      <View style={styles.thumbnailContainer}>
+      <Pressable
+        style={styles.thumbnailContainer}
+        onPress={() => onPostPress(item)}
+      >
         <Image
           source={{ uri: thumbnailUri }}
           style={styles.thumbnail}
@@ -62,7 +71,7 @@ const UserDetails = ({ route, navigation }) => {
             setLoadError(true);
           }}
         />
-      </View>
+      </Pressable>
     );
   };
 
@@ -82,7 +91,7 @@ const UserDetails = ({ route, navigation }) => {
       <FlatList
         data={videos}
         renderItem={({ item }) => (
-          <VideoThumbnail thumbnailUri={item.thumbnail} />
+          <VideoThumbnail thumbnailUri={item.thumbnail} item={item} />
         )}
         keyExtractor={(item) => `${item.id}`}
         numColumns={2}

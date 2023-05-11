@@ -29,7 +29,13 @@ const Favourites = () => {
    * @returns {JSX.Element} - Rendered video component.
    */
   const renderVideo = ({ item }) => {
-    return <Feed item={item} isFavourites={true} />;
+    return (
+      <Feed
+        item={item}
+        isFavourites={true}
+        height={SCREEN_HEIGHT - tabBarHeight}
+      />
+    );
   };
 
   return (

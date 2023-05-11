@@ -38,7 +38,7 @@ import CommentsModal from "./CommentsModal";
  * @param {object} item - The feed item object.
  * @param {boolean} isFavourites - Indicates if the feed item is in favorites.
  */
-const Feed = ({ item, isFavourites }) => {
+const Feed = ({ item, isFavourites, height }) => {
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -47,7 +47,6 @@ const Feed = ({ item, isFavourites }) => {
   const doubleTapTimerRef = useRef(null);
 
   // Get the height of the bottom tab bar
-  const tabBarHeight = useBottomTabBarHeight();
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const recognitionModalRef = useRef(null);
@@ -161,16 +160,13 @@ const Feed = ({ item, isFavourites }) => {
   }, []);
 
   return (
-    <View style={[styles.container, { height: SCREEN_HEIGHT - tabBarHeight }]}>
+    <View style={[styles.container, { height: height }]}>
       {/* Touchable video wrapper */}
       <TouchableOpacity
         activeOpacity={1}
         onPress={handleDoubleTap}
         ref={doubleTapRef}
-        style={[
-          styles.videoWrapper,
-          { height: SCREEN_HEIGHT - tabBarHeight, width: SCREEN_WIDTH },
-        ]}
+        style={[styles.videoWrapper, { height: height, width: SCREEN_WIDTH }]}
       >
         {/* Video component */}
         <Video

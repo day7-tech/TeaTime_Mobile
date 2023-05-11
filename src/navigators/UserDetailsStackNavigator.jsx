@@ -2,7 +2,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import Back from "../components/Navigation/Back";
 import UserDetails from "../features/userDetails/containers/UserDetails";
-import { ROUTE_USER_DETAILS } from "./RouteNames";
+import { ROUTE_USER_DETAILS, ROUTE_USER_POST_DETAILS } from "./RouteNames";
+import UserPostDetails from "../features/userDetails/containers/UserPostDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,13 @@ const UserDetailsStackNavigator = () => {
           headerLeft: () => <Back onPress={() => navigation.goBack()} />,
           // Hide the shadow below the header
           headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        component={UserPostDetails}
+        name={ROUTE_USER_POST_DETAILS}
+        options={() => ({
+          headerShown: false,
         })}
       />
     </Stack.Navigator>

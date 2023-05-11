@@ -11,10 +11,6 @@ const Moments = () => {
   // Create a reference to the FlatList component
   const flatListRef = useRef(null);
 
-  // Create references to track the current scroll offset and direction
-  const scrollOffsetRef = useRef(0);
-  const scrollDirectionRef = useRef(null);
-
   // Get the height of the bottom tab bar using the useBottomTabBarHeight hook
   const tabBarHeight = useBottomTabBarHeight();
 
@@ -30,7 +26,13 @@ const Moments = () => {
 
   // Function to render a single video post
   const renderVideo = ({ item }) => {
-    return <Feed item={item} isFavourites={false} />;
+    return (
+      <Feed
+        item={item}
+        isFavourites={false}
+        height={SCREEN_HEIGHT - tabBarHeight}
+      />
+    );
   };
 
   return (
