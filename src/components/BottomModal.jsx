@@ -22,6 +22,7 @@ const BottomModal = ({
   bottomSheetModalRef,
   onClose,
   containerStyle,
+  bottomSheetContainerStyle,
 }) => {
   const snapPoints = ["80%"];
 
@@ -50,7 +51,7 @@ const BottomModal = ({
       enablePanDownToClose={true}
       onDismiss={onClose}
       backdropComponent={renderBackdrop}
-      backgroundStyle={styles.bottomSheetContainer}
+      backgroundStyle={[styles.bottomSheetContainer, bottomSheetContainerStyle]}
     >
       <BottomSheetScrollView
         contentContainerStyle={[styles.contentContainer, containerStyle]}

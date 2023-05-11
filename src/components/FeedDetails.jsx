@@ -36,6 +36,7 @@ const FeedDetails = ({
   isLiked,
   isFavourites,
   onThanksPress,
+  onCommentsPress,
 }) => {
   return (
     <View style={[styles.container, style]}>
@@ -65,6 +66,7 @@ const FeedDetails = ({
           defaultLikes={defaultLikes}
           isLiked={isLiked}
           onThanksPress={onThanksPress}
+          onCommentsPress={onCommentsPress}
         />
       ) : (
         <MomentsFeedOptions
@@ -72,6 +74,7 @@ const FeedDetails = ({
           defaultLikes={defaultLikes}
           isLiked={isLiked}
           onThanksPress={onThanksPress}
+          onCommentsPress={onCommentsPress}
         />
       )}
     </View>

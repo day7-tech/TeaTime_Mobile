@@ -30,6 +30,7 @@ import {
   ROUTE_USER_DETAILS_STACK_NAVIGATOR,
 } from "../../../navigators/RouteNames";
 import { ROUTE_AUTHENTICATED_NAVIGATOR } from "../../../navigators/RouteNames";
+import CommentsModal from "./CommentsModal";
 
 /**
  * Feed: Component for displaying a feed item.
@@ -50,6 +51,7 @@ const Feed = ({ item, isFavourites }) => {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(item.likeCount);
   const recognitionModalRef = useRef(null);
+  const commentsModalRef = useRef(null);
 
   const lastTapRef = useRef(null);
 
@@ -154,6 +156,10 @@ const Feed = ({ item, isFavourites }) => {
     recognitionModalRef?.current?.close();
   }, []);
 
+  const onCommentsPress = useCallback(() => {
+    commentsModalRef?.current?.present();
+  }, []);
+
   return (
     <View style={[styles.container, { height: SCREEN_HEIGHT - tabBarHeight }]}>
       {/* Touchable video wrapper */}
@@ -188,6 +194,7 @@ const Feed = ({ item, isFavourites }) => {
           isFavourites={isFavourites}
           onThanksPress={onThanksPress}
           onUserDetailsPress={onUserDetailsPress}
+          onCommentsPress={onCommentsPress}
         />
       </View>
       {/* Recognition stickers modal */}
@@ -198,6 +205,7 @@ const Feed = ({ item, isFavourites }) => {
         onSendStickerPress={onSendStickerPress}
         onModalClose={onModalClose}
       />
+      <CommentsModal commentsModalRef={commentsModalRef} userDetails={item} />
     </View>
   );
 };

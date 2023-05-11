@@ -14,12 +14,13 @@ import Favourites from "./Favourites";
 import Moments from "./Moments";
 import SearchIcon from "./../../../../assets/images/search.png";
 import Typography from "../../../components/Typography/Typography";
+import { ROUTE_SEARCH_SCREEN } from "../../../navigators/RouteNames";
 
 // Create two components to render as the two tabs
 const FirstRoute = () => <Moments />;
 const SecondRoute = () => <Favourites />;
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   // Set up state to track the selected tab
   const [index, setIndex] = React.useState(0);
   // Define an array of route objects, one for each tab
@@ -61,7 +62,9 @@ const HomeScreen = () => {
   };
 
   // Define a callback function for when the search icon is pressed
-  const onSearchPress = useCallback(() => {}, []);
+  const onSearchPress = useCallback(() => {
+    navigation.navigate(ROUTE_SEARCH_SCREEN);
+  }, []);
 
   return (
     <View style={styles.container}>

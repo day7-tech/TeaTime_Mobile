@@ -12,3 +12,4 @@ export const ROUTE_RECOGNITION_SUCCESS_SCREEN = "recognition_success_screen";
 export const ROUTE_USER_DETAILS = "user_details";
 export const ROUTE_USER_DETAILS_STACK_NAVIGATOR =
   "user_details_stack_navigator";
+export const ROUTE_SEARCH_SCREEN = "search_screen";

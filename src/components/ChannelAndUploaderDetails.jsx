@@ -16,9 +16,10 @@ const ChannelAndUploaderDetails = ({
   channelName,
   uploaderImage,
   uploaderName,
+  onPress,
 }) => {
   return (
-    <Pressable style={styles.channelDetailsContainer}>
+    <Pressable style={styles.channelDetailsContainer} onPress={onPress}>
       <View style={styles.userDetails}>
         <Image source={{ uri: uploaderImage }} style={styles.uploaderImage} />
         <Image source={{ uri: channelImage }} style={styles.channelImage} />

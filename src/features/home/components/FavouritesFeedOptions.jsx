@@ -15,6 +15,7 @@ const FavouritesFeedOptions = ({
   defaultLikes,
   isLiked,
   onThanksPress,
+  onCommentsPress,
 }) => {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(item.likeCount);
@@ -53,7 +54,7 @@ const FavouritesFeedOptions = ({
       <FeedOption
         label={"Comments"}
         imageIcon={CommentsIcon}
-        onPress={onLikePress}
+        onPress={onCommentsPress}
       />
       {/* Reply Option */}
       <FeedOption
