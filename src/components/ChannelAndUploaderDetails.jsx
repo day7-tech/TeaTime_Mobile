@@ -15,9 +15,13 @@ const ChannelAndUploaderDetails = ({
         <Image source={{ uri: uploaderImage }} style={styles.uploaderImage} />
         <Image source={{ uri: channelImage }} style={styles.channelImage} />
       </View>
-      <View>
-        <Typography style={styles.uploaderName}>{uploaderName}</Typography>
-        <Typography style={styles.channelName}>{channelName}</Typography>
+      <View style={styles.textContainer}>
+        <Typography style={styles.uploaderName} numberOfLines={1}>
+          {uploaderName}
+        </Typography>
+        <Typography style={styles.channelName} numberOfLines={1}>
+          {channelName}
+        </Typography>
       </View>
     </Pressable>
   );
@@ -52,5 +56,8 @@ const styles = StyleSheet.create({
   channelName: {
     color: Colors.white,
     lineHeight: 14,
+  },
+  textContainer: {
+    flex: 1,
   },
 });

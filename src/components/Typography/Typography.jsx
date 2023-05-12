@@ -18,6 +18,7 @@ export default function Typography({ style, ...props }) {
         return "Outfit-Light";
       case "medium":
       case 500:
+      case 600:
         return "Outfit-Medium";
       case "bold":
       case 700:

@@ -23,6 +23,11 @@ import { Colors } from "../../../utils/styles";
 import BottomModal from "../../../components/BottomModal";
 import RecognitionStickersModal from "../../recognition/containers/RecognitionStickersModal";
 import { useNavigation } from "@react-navigation/native";
+import {
+  ROUTE_RECOGNITION_STACK_NAVIGATOR,
+  ROUTE_RECOGNITION_STICKER_SCREEN,
+} from "../../../navigators/RouteNames";
+import { ROUTE_AUTHENTICATED_NAVIGATOR } from "../../../navigators/RouteNames";
 
 const Feed = ({ item, isFavourites }) => {
   const navigation = useNavigation();
@@ -76,6 +81,26 @@ const Feed = ({ item, isFavourites }) => {
     recognitionModalRef?.current?.present();
   }, []);
 
+  const onSendStickerPress = useCallback((sticker) => {
+    onModalClose();
+    setTimeout(() => {
+      navigation.navigate(ROUTE_AUTHENTICATED_NAVIGATOR, {
+        screen: ROUTE_RECOGNITION_STACK_NAVIGATOR,
+        params: {
+          screen: ROUTE_RECOGNITION_STICKER_SCREEN,
+          params: {
+            post: item,
+            sticker,
+          },
+        },
+      });
+    }, 500);
+  }, []);
+
+  const onModalClose = useCallback(() => {
+    recognitionModalRef?.current?.close();
+  }, []);
+
   return (
     <View style={[styles.container, { height: SCREEN_HEIGHT - tabBarHeight }]}>
       <TouchableOpacity
@@ -112,6 +137,8 @@ const Feed = ({ item, isFavourites }) => {
         recognitionModalRef={recognitionModalRef}
         postDetails={item}
         stickers={Stickers}
+        onSendStickerPress={onSendStickerPress}
+        onModalClose={onModalClose}
       />
     </View>
   );
