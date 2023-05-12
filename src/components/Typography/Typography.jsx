@@ -1,6 +1,6 @@
-import React from 'react';
-import { Text } from 'react-native';
-import styles from './Typography.style';
+import React from "react";
+import { Text } from "react-native";
+import styles from "./Typography.style";
 
 /**
  * A component that displays text with some provided styling defaults.
@@ -8,30 +8,25 @@ import styles from './Typography.style';
  * @param {TextProps} props The props to pass to the Text component.
  */
 export default function Typography({ style, ...props }) {
-    const { fontWeight, ...provided } = style || {};
-
-    let fontFamily;
-
-    switch (fontWeight) {
-        case 'thin':
-        case 100:
-            fontFamily = 'Outfit-Thin';
-            break;
-        case 'light':
-        case 300:
-            fontFamily = 'Outfit-Light';
-            break;
-        case 'medium':
-        case 500:
-            fontFamily = 'Outfit-Medium';
-            break;
-        case 'bold':
-        case 700:
-            fontFamily = 'Outfit-Bold';
-            break;
-        default:
-            fontFamily = 'Outfit-Regular';
+  const fontFamily = (() => {
+    switch (style?.fontWeight) {
+      case "thin":
+      case 100:
+        return "Outfit-Thin";
+      case "light":
+      case 300:
+        return "Outfit-Light";
+      case "medium":
+      case 500:
+      case 600:
+        return "Outfit-Medium";
+      case "bold":
+      case 700:
+        return "Outfit-Bold";
+      default:
+        return "Outfit-Regular";
     }
+  })();
 
-    return <Text style={{ ...styles.default, fontFamily, ...provided }} {...props} />;
+  return <Text style={[styles.default, { fontFamily }, style]} {...props} />;
 }
