@@ -1,0 +1,157 @@
+import {
+  ActivityIndicator,
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import React, { useCallback, useRef, useState, useEffect } from "react";
+import CloseIcon from "../../../../assets/images/close.png";
+import { HORIZONTAL_MARGIN } from "../../../utils/constants";
+import { Colors } from "../../../utils/styles";
+import { Camera } from "expo-camera";
+import { useFocusEffect } from "@react-navigation/native";
+import GalleryImages from "../components/GalleryImages";
+import FlashLightIcon from "../../../../assets/images/light.png";
+import PhotoClickIcon from "../../../../assets/images/photo-click.png";
+import ChangeCameraIcon from "../../../../assets/images/change-camera.png";
+import FaceMasksIcon from "../../../../assets/images/face-masks.png";
+import * as ImagePicker from "expo-image-picker";
+import CameraComponent from "../components/CameraComponent";
+
+const Post = ({ onClosePress }) => {
+  const [isCameraEnabled, setIsCameraEnabled] = useState(false);
+  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
+  const cameraRef = useRef();
+  const [cameraPermission, requestCameraPermission] =
+    Camera.useCameraPermissions();
+  const [micPermission, requestMicPermission] =
+    Camera.useMicrophonePermissions();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Enable the camera when the screen is focused
+      if (!cameraPermission?.granted || !micPermission?.granted) {
+        // Camera or mic permissions are not granted yet
+        if (!cameraPermission?.granted) await requestCameraPermission();
+        if (!micPermission?.granted) await requestMicPermission();
+      }
+
+      setIsCameraEnabled(true);
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const onCameraReady = useCallback(() => {
+    setIsCameraEnabled(true);
+  }, []);
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      // Do something with the selected image or video
+      const tempFileUri = await saveFileToLocal(result.assets[0].uri);
+      goToPreviewScreen(tempFileUri);
+    }
+  };
+
+  const toggleFlash = () => {
+    setFlashMode((prevFlashMode) =>
+      prevFlashMode === Camera.Constants.FlashMode.off
+        ? Camera.Constants.FlashMode.torch
+        : Camera.Constants.FlashMode.off
+    );
+  };
+
+  const switchCamera = () => {
+    setCameraType((prevCameraType) =>
+      prevCameraType === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    );
+  };
+
+  const takePicture = async () => {
+    if (cameraRef.current) {
+      const options = { quality: 0.5, base64: true };
+      const data = await cameraRef.current.takePictureAsync(options);
+      console.log(data.uri);
+      const tempFileUri = await saveFileToLocal(data.uri);
+      console.log("Temp file URI:", tempFileUri);
+      // goToPreviewScreen(tempFileUri);
+    }
+  };
+
+  const handleMediaCapture = (fileUri) => {
+    // Handle the captured image here
+  };
+
+  if (isLoading || !cameraPermission || !micPermission) {
+    // Camera permissions are still loading
+    return <ActivityIndicator size="large" color="#fff" />;
+  }
+
+  return (
+    <View style={styles.container}>
+      <CameraComponent
+        onClosePress={onClosePress}
+        onMediaCapture={handleMediaCapture}
+        mediaType="camera"
+      >
+        <View style={styles.topButtonContainer}>
+          <Pressable onPress={onClosePress} style={styles.closeButton}>
+            <Image source={CloseIcon} />
+          </Pressable>
+        </View>
+        <View style={styles.bottomButtonContainer}>
+          <Pressable onPress={pickImage}>
+            <GalleryImages />
+          </Pressable>
+          <Pressable onPress={toggleFlash} style={styles.flashButton}>
+            <Image source={FlashLightIcon} />
+          </Pressable>
+          <Pressable onPress={takePicture} style={styles.flashButton}>
+            <Image source={PhotoClickIcon} />
+          </Pressable>
+          <Pressable onPress={switchCamera} style={styles.flashButton}>
+            <Image source={ChangeCameraIcon} />
+          </Pressable>
+          <Pressable onPress={toggleFlash} style={styles.flashButton}>
+            <Image source={FaceMasksIcon} />
+          </Pressable>
+        </View>
+      </CameraComponent>
+    </View>
+  );
+};
+
+export default Post;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.black,
+    flex: 1,
+  },
+  bottomButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginBottom: 10,
+  },
+  topButtonContainer: {
+    flex: 1,
+    padding: HORIZONTAL_MARGIN,
+  },
+});

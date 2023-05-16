@@ -53,6 +53,7 @@ const Feed = ({ item, isFavourites, height }) => {
   const commentsModalRef = useRef(null);
 
   const lastTapRef = useRef(null);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
 
   /**
    * Handle double tap event.
@@ -159,6 +160,28 @@ const Feed = ({ item, isFavourites, height }) => {
     commentsModalRef?.current?.present();
   }, []);
 
+  // useEffect(() => {
+  //   return () => {
+  //     // Stop the currently playing video when unmounting the component
+  //     if (currentlyPlaying === item.id) {
+  //       setIsPlaying(false);
+  //     }
+  //   };
+  // }, [currentlyPlaying, item.id]);
+
+  // const handleVideoVisibility = useCallback(
+  //   (isVisible) => {
+  //     if (isVisible && !isPlaying) {
+  //       setCurrentlyPlaying(item.id);
+  //       setIsPlaying(true);
+  //     } else if (!isVisible && isPlaying && currentlyPlaying === item.id) {
+  //       setCurrentlyPlaying(null);
+  //       setIsPlaying(false);
+  //     }
+  //   },
+  //   [currentlyPlaying, isPlaying, item.id]
+  // );
+
   return (
     <View style={[styles.container, { height: height }]}>
       {/* Touchable video wrapper */}
@@ -202,6 +225,15 @@ const Feed = ({ item, isFavourites, height }) => {
         onModalClose={onModalClose}
       />
       <CommentsModal commentsModalRef={commentsModalRef} userDetails={item} />
+      {/* <View
+        style={styles.visibleChecker}
+        onLayout={(event) => {
+          const { height: checkerHeight } = event.nativeEvent.layout;
+          const isVideoVisible =
+            checkerHeight >= height && checkerHeight <= height;
+          handleVideoVisibility(isVideoVisible);
+        }}
+      /> */}
     </View>
   );
 };
@@ -221,5 +253,14 @@ const styles = StyleSheet.create({
   },
   postDetails: {
     marginHorizontal: HORIZONTAL_MARGIN,
+  },
+  visibleChecker: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: -1,
+    opacity: 0,
   },
 });

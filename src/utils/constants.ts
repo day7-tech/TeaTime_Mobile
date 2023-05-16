@@ -7,3 +7,8 @@ export const verticalPaddingValue = SCREEN_HEIGHT > 700 ? 40 : 20;
 export const horizontalPaddingValue = SCREEN_WIDTH > 500 ? 40 : 20;
 export const verticalMarginValue = SCREEN_HEIGHT > 700 ? 40 : 20;
 export const horizontalMarginValue = SCREEN_WIDTH > 500 ? 40 : 20;
+export const options = [
+  { label: "Post", value: "post" },
+  { label: "Video", value: "video" },
+  { label: "Notes", value: "notes" },
+];

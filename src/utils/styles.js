@@ -9,4 +9,8 @@ export const Colors = {
   darkGrey: "#474747",
   lightGrey: "#848484",
   lightestGrey: "#E5E5E5",
+  White10: "#37394C",
+  White5: "#2C2E42",
+  White20: "#4D4F60",
+  WhiteOpacity10: "#FFFFFF1A",
 };

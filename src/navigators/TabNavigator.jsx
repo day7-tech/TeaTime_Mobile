@@ -11,16 +11,20 @@ import ProfileIcon from "./../../assets/images/user.png";
 import GroupsIcon from "./../../assets/images/users.png";
 import {
   ROUTE_ADD_CONTENT,
+  ROUTE_CREATE_POST_STACK_NAVIGATOR,
   ROUTE_GROUPS_SCREEN,
   ROUTE_HOME_SCREEN,
   ROUTE_NOTIFICATIONS_SCREEN,
   ROUTE_PROFILE_SCREEN,
 } from "./RouteNames";
+import CreatePostOptions from "../features/createPost/containers/CreatePostOptions";
+import CreatePostStackNavigator from "./CreatePostStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
 // TabNavigator: Manages the bottom tab navigation in the app
-const TabNavigator = () => {
+const TabNavigator = (props) => {
+  const hide = props.routeName != ROUTE_CREATE_POST_STACK_NAVIGATOR;
   return (
     <Tab.Navigator
       initialRouteName={ROUTE_HOME_SCREEN}
@@ -71,9 +75,11 @@ const TabNavigator = () => {
 
       {/* Add Content Tab */}
       <Tab.Screen
-        component={HomeScreen}
-        name={ROUTE_ADD_CONTENT}
+        component={CreatePostStackNavigator}
+        name={ROUTE_CREATE_POST_STACK_NAVIGATOR}
         options={{
+          headerShown: false,
+          tabBarStyle: { display: hide ? "none" : "flex" },
           tabBarLabel: () => null,
           tabBarIcon: () => <TabBarOption imageIcon={AddIcon} />,
         }}
