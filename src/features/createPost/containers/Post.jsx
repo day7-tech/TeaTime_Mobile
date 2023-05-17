@@ -12,16 +12,19 @@ import CloseIcon from "../../../../assets/images/close.png";
 import { HORIZONTAL_MARGIN } from "../../../utils/constants";
 import { Colors } from "../../../utils/styles";
 import { Camera } from "expo-camera";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import GalleryImages from "../components/GalleryImages";
 import FlashLightIcon from "../../../../assets/images/light.png";
 import PhotoClickIcon from "../../../../assets/images/photo-click.png";
 import ChangeCameraIcon from "../../../../assets/images/change-camera.png";
 import FaceMasksIcon from "../../../../assets/images/face-masks.png";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 import CameraComponent from "../components/CameraComponent";
+import { ROUTE_EDITING } from "../../../navigators/RouteNames";
 
 const Post = ({ onClosePress }) => {
+  const navigation = useNavigation();
   const [isCameraEnabled, setIsCameraEnabled] = useState(false);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
@@ -31,6 +34,27 @@ const Post = ({ onClosePress }) => {
   const [micPermission, requestMicPermission] =
     Camera.useMicrophonePermissions();
   const [isLoading, setIsLoading] = useState(true);
+
+  const saveFileToLocal = useCallback(async (uri) => {
+    const fileName = uri.split("/").pop();
+    const fileExtension = fileName.split(".").pop();
+    const tempFileUri = `${
+      FileSystem.documentDirectory
+    }${Date.now()}.${fileExtension}`;
+
+    try {
+      await FileSystem.copyAsync({
+        from: uri,
+        to: tempFileUri,
+      });
+
+      console.log("File saved temporarily at:", tempFileUri);
+      return tempFileUri;
+    } catch (error) {
+      console.error("Error saving file:", error);
+      return null;
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +78,7 @@ const Post = ({ onClosePress }) => {
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
@@ -63,7 +87,7 @@ const Post = ({ onClosePress }) => {
     if (!result.canceled) {
       // Do something with the selected image or video
       const tempFileUri = await saveFileToLocal(result.assets[0].uri);
-      goToPreviewScreen(tempFileUri);
+      navigation.navigate(ROUTE_EDITING, { fileUri: tempFileUri });
     }
   };
 
@@ -90,6 +114,8 @@ const Post = ({ onClosePress }) => {
       console.log(data.uri);
       const tempFileUri = await saveFileToLocal(data.uri);
       console.log("Temp file URI:", tempFileUri);
+      navigation.navigate(ROUTE_EDITING, { fileUri: tempFileUri });
+
       // goToPreviewScreen(tempFileUri);
     }
   };

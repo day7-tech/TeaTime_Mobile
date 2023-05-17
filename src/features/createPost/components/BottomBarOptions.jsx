@@ -26,9 +26,8 @@ const BottomBarOptions = ({ options, value, setValue }) => {
       scrollToCenter(index);
     }
   }, [value, options]);
-
   const scrollToCenter = (index) => {
-    const scrollToX = SCREEN_WIDTH / 2 + index * tabWidth + tabWidth / 2;
+    const scrollToX = index * (tabWidth + tabWidth / 10);
     scrollViewRef.current.scrollTo({
       x: scrollToX,
       y: 0,
@@ -58,7 +57,7 @@ const BottomBarOptions = ({ options, value, setValue }) => {
         scrollEnabled={false}
         onLayout={handleOnLayout}
       >
-        <View style={styles.hiddenSpacing}></View>
+        <View style={[styles.hiddenSpacing]} />
         {options.map((option, index) => {
           const isFocused = selectedIndex === index;
           return (
@@ -77,7 +76,7 @@ const BottomBarOptions = ({ options, value, setValue }) => {
             </TouchableOpacity>
           );
         })}
-        <View style={styles.hiddenSpacing}></View>
+        <View style={[styles.hiddenSpacing]} />
       </ScrollView>
     </View>
   );
@@ -113,6 +112,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   hiddenSpacing: {
-    width: SCREEN_WIDTH,
+    width: (SCREEN_WIDTH - tabWidth / 2) / 2,
   },
 });

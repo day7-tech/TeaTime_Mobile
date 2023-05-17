@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  AppState,
 } from "react-native";
 import LikeIcon from "../../../../assets/images/heart.png";
 import ShareIcon from "../../../../assets/images/share.png";
@@ -38,7 +39,7 @@ import CommentsModal from "./CommentsModal";
  * @param {object} item - The feed item object.
  * @param {boolean} isFavourites - Indicates if the feed item is in favorites.
  */
-const Feed = ({ item, isFavourites, height, currentVideoId, pauseVideo }) => {
+const Feed = ({ item, isFavourites, height, currentVideoId }) => {
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -53,13 +54,6 @@ const Feed = ({ item, isFavourites, height, currentVideoId, pauseVideo }) => {
   const commentsModalRef = useRef(null);
 
   const lastTapRef = useRef(null);
-  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
-  useEffect(() => {
-    // Pause the video if the pauseVideo prop is true
-    if (pauseVideo && videoRef.current) {
-      videoRef.current.pause();
-    }
-  }, [pauseVideo]);
 
   /**
    * Handle double tap event.
@@ -186,7 +180,7 @@ const Feed = ({ item, isFavourites, height, currentVideoId, pauseVideo }) => {
           onLoad={handleVideoLoad}
           isMuted={false}
           volume={0.9}
-          paused={item.id !== currentVideoId || pauseVideo}
+          paused={item.id !== currentVideoId}
         />
       </TouchableOpacity>
       {/* Feed details section */}

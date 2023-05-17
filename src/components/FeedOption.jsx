@@ -20,11 +20,15 @@ import Typography from "./Typography/Typography";
  * @param {Function} onPress - Function to handle the press event.
  * @returns {JSX.Element} - The FeedOption component.
  */
-const FeedOption = ({ style, imageIcon, label, onPress }) => {
+const FeedOption = ({ style, imageIcon, label, onPress, textStyle }) => {
   return (
     <Pressable style={[styles.container, style]} onPress={onPress}>
       <Image source={imageIcon} />
-      <Typography style={styles.label} numberOfLines={1} ellipsizeMode="tail">
+      <Typography
+        style={[styles.label, textStyle]}
+        numberOfLines={1}
+        ellipsizeMode="tail"
+      >
         {label}
       </Typography>
     </Pressable>

@@ -13,4 +13,9 @@ export const Colors = {
   White5: "#2C2E42",
   White20: "#4D4F60",
   WhiteOpacity10: "#FFFFFF1A",
+  green: "#70C050",
+  yellow: "#FDD500",
+  darkPink: "#D10869",
+  red: "#F60000",
+  skyBlue: "#3897F0",
 };

@@ -17,3 +17,4 @@ export const ROUTE_USER_POST_DETAILS = "user_post_details";
 export const ROUTE_CREATE_POST_STACK_NAVIGATOR = "create_post_stack_navigator";
 export const ROUTE_CREATE_POST_OPTIONS = "create_post_options";
 export const ROUTE_NOTES = "notes";
+export const ROUTE_EDITING = "editing";
