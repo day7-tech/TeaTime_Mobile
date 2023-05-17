@@ -37,7 +37,6 @@ const EditingScreen = ({ route }) => {
       setDisplayText(textValue);
       setDisplayColor(selectedColor);
       setDisplayTextSize(selectedSize);
-      console.log(textValue, selectedColor, selectedSize);
       setTextModalVisible(false);
     },
     []
