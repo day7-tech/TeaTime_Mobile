@@ -15,10 +15,19 @@ import Moments from "./Moments";
 import SearchIcon from "./../../../../assets/images/search.png";
 import Typography from "../../../components/Typography/Typography";
 import { ROUTE_SEARCH_SCREEN } from "../../../navigators/RouteNames";
+import { useIsFocused } from "@react-navigation/native";
 
 // Create two components to render as the two tabs
-const FirstRoute = () => <Moments />;
-const SecondRoute = () => <Favourites />;
+// Create two components to render as the two tabs
+const FirstRoute = () => {
+  const isFocused = useIsFocused();
+  return <Moments isFocused={isFocused} />;
+};
+
+const SecondRoute = () => {
+  const isFocused = useIsFocused();
+  return <Favourites isFocused={isFocused} />;
+};
 
 const HomeScreen = ({ navigation }) => {
   // Set up state to track the selected tab

@@ -13,29 +13,7 @@ import { options } from "../../../utils/constants";
 import { ROUTE_NOTES } from "../../../navigators/RouteNames";
 
 const CreatePostOptions = ({ navigation }) => {
-  const [isCameraEnabled, setCameraEnabled] = useState(true);
-  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
-  const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
-  const [isRecording, setRecording] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
   const [postType, setPostType] = useState("post");
-  const [cameraPermission, requestCameraPermission] =
-    Camera.useCameraPermissions();
-  const [micPermission, requestMicPermission] =
-    Camera.useMicrophonePermissions();
-  const cameraRef = useRef();
-
-  useFocusEffect(
-    useCallback(() => {
-      setCameraEnabled(true);
-      return () => {
-        setCameraEnabled(false);
-        if (cameraRef.current) {
-          cameraRef.current.pausePreview();
-        }
-      };
-    }, [])
-  );
 
   useEffect(() => {
     if (postType === "notes") {

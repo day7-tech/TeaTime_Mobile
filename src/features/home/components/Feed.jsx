@@ -38,7 +38,7 @@ import CommentsModal from "./CommentsModal";
  * @param {object} item - The feed item object.
  * @param {boolean} isFavourites - Indicates if the feed item is in favorites.
  */
-const Feed = ({ item, isFavourites, height }) => {
+const Feed = ({ item, isFavourites, height, currentVideoId, pauseVideo }) => {
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -54,6 +54,12 @@ const Feed = ({ item, isFavourites, height }) => {
 
   const lastTapRef = useRef(null);
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
+  useEffect(() => {
+    // Pause the video if the pauseVideo prop is true
+    if (pauseVideo && videoRef.current) {
+      videoRef.current.pause();
+    }
+  }, [pauseVideo]);
 
   /**
    * Handle double tap event.
@@ -75,7 +81,7 @@ const Feed = ({ item, isFavourites, height }) => {
         handlePlayPause();
       }, DOUBLE_TAP_DELAY);
     }
-  }, [handleLike]);
+  }, [handleLike, handlePlayPause]);
 
   /**
    * Handle the Like button press.
@@ -160,28 +166,6 @@ const Feed = ({ item, isFavourites, height }) => {
     commentsModalRef?.current?.present();
   }, []);
 
-  // useEffect(() => {
-  //   return () => {
-  //     // Stop the currently playing video when unmounting the component
-  //     if (currentlyPlaying === item.id) {
-  //       setIsPlaying(false);
-  //     }
-  //   };
-  // }, [currentlyPlaying, item.id]);
-
-  // const handleVideoVisibility = useCallback(
-  //   (isVisible) => {
-  //     if (isVisible && !isPlaying) {
-  //       setCurrentlyPlaying(item.id);
-  //       setIsPlaying(true);
-  //     } else if (!isVisible && isPlaying && currentlyPlaying === item.id) {
-  //       setCurrentlyPlaying(null);
-  //       setIsPlaying(false);
-  //     }
-  //   },
-  //   [currentlyPlaying, isPlaying, item.id]
-  // );
-
   return (
     <View style={[styles.container, { height: height }]}>
       {/* Touchable video wrapper */}
@@ -196,12 +180,13 @@ const Feed = ({ item, isFavourites, height }) => {
           ref={videoRef}
           source={{ uri: item.uri }}
           style={styles.video}
-          shouldPlay={isPlaying}
+          shouldPlay={currentVideoId === item.id && isVideoLoaded && isPlaying}
           resizeMode={ResizeMode.COVER}
           isLooping
           onLoad={handleVideoLoad}
           isMuted={false}
           volume={0.9}
+          paused={item.id !== currentVideoId || pauseVideo}
         />
       </TouchableOpacity>
       {/* Feed details section */}
@@ -225,15 +210,6 @@ const Feed = ({ item, isFavourites, height }) => {
         onModalClose={onModalClose}
       />
       <CommentsModal commentsModalRef={commentsModalRef} userDetails={item} />
-      {/* <View
-        style={styles.visibleChecker}
-        onLayout={(event) => {
-          const { height: checkerHeight } = event.nativeEvent.layout;
-          const isVideoVisible =
-            checkerHeight >= height && checkerHeight <= height;
-          handleVideoVisibility(isVideoVisible);
-        }}
-      /> */}
     </View>
   );
 };

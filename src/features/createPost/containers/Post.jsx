@@ -105,34 +105,41 @@ const Post = ({ onClosePress }) => {
 
   return (
     <View style={styles.container}>
-      <CameraComponent
-        onClosePress={onClosePress}
-        onMediaCapture={handleMediaCapture}
-        mediaType="camera"
-      >
-        <View style={styles.topButtonContainer}>
-          <Pressable onPress={onClosePress} style={styles.closeButton}>
-            <Image source={CloseIcon} />
-          </Pressable>
-        </View>
-        <View style={styles.bottomButtonContainer}>
-          <Pressable onPress={pickImage}>
-            <GalleryImages />
-          </Pressable>
-          <Pressable onPress={toggleFlash} style={styles.flashButton}>
-            <Image source={FlashLightIcon} />
-          </Pressable>
-          <Pressable onPress={takePicture} style={styles.flashButton}>
-            <Image source={PhotoClickIcon} />
-          </Pressable>
-          <Pressable onPress={switchCamera} style={styles.flashButton}>
-            <Image source={ChangeCameraIcon} />
-          </Pressable>
-          <Pressable onPress={toggleFlash} style={styles.flashButton}>
-            <Image source={FaceMasksIcon} />
-          </Pressable>
-        </View>
-      </CameraComponent>
+      {isCameraEnabled && (
+        <Camera
+          style={
+            Platform.OS === "android" ? { aspectRatio: 9 / 16 } : { flex: 1 }
+          }
+          type={cameraType}
+          flashMode={flashMode}
+          ref={cameraRef}
+          ratio={"16:9"}
+          onCameraReady={onCameraReady}
+        >
+          <View style={styles.topButtonContainer}>
+            <Pressable onPress={onClosePress} style={styles.closeButton}>
+              <Image source={CloseIcon} />
+            </Pressable>
+          </View>
+          <View style={styles.bottomButtonContainer}>
+            <Pressable onPress={pickImage}>
+              <GalleryImages />
+            </Pressable>
+            <Pressable onPress={toggleFlash} style={styles.flashButton}>
+              <Image source={FlashLightIcon} />
+            </Pressable>
+            <Pressable onPress={takePicture} style={styles.flashButton}>
+              <Image source={PhotoClickIcon} />
+            </Pressable>
+            <Pressable onPress={switchCamera} style={styles.flashButton}>
+              <Image source={ChangeCameraIcon} />
+            </Pressable>
+            <Pressable onPress={toggleFlash} style={styles.flashButton}>
+              <Image source={FaceMasksIcon} />
+            </Pressable>
+          </View>
+        </Camera>
+      )}
     </View>
   );
 };

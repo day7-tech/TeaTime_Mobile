@@ -93,7 +93,7 @@ const Video = ({ onClosePress }) => {
 
   return (
     <View style={styles.container}>
-      {/* {isCameraEnabled && (
+      {isCameraEnabled && (
         <Camera
           style={
             Platform.OS === "android" ? { aspectRatio: 9 / 16 } : { flex: 1 }
@@ -128,36 +128,7 @@ const Video = ({ onClosePress }) => {
             </Pressable>
           </View>
         </Camera>
-      )} */}
-      <CameraComponent
-        onClosePress={onClosePress}
-        mediaType="video"
-        onMediaCapture={handleMediaCapture}
-      >
-        <View style={styles.topButtonContainer}>
-          <Pressable onPress={onClosePress} style={styles.closeButton}>
-            <Image source={CloseIcon} />
-          </Pressable>
-          <Pressable onPress={toggleFlash} style={styles.flashButton}>
-            <Image source={FlashLightIcon} />
-          </Pressable>
-        </View>
-        <View style={styles.bottomButtonContainer}>
-          <Pressable onPress={pickImage}>
-            <GalleryImages mediaType="video" />
-          </Pressable>
-          <Pressable
-            onPressIn={startRecording}
-            onPressOut={stopRecording}
-            style={styles.flashButton}
-          >
-            <Image source={RecordVideoIcon} />
-          </Pressable>
-          <Pressable onPress={switchCamera} style={styles.flashButton}>
-            <Image source={ChangeCameraIcon} />
-          </Pressable>
-        </View>
-      </CameraComponent>
+      )}
     </View>
   );
 };

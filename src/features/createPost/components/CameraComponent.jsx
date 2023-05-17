@@ -23,11 +23,12 @@ const CameraComponent = ({
   mediaType,
   onMediaCapture,
   children,
+  cameraRef,
+  isCameraEnabled,
+  setIsCameraEnabled,
 }) => {
-  const [isCameraEnabled, setIsCameraEnabled] = useState(false);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
-  const cameraRef = useRef();
   const [cameraPermission, requestCameraPermission] =
     Camera.useCameraPermissions();
   const [micPermission, requestMicPermission] =
@@ -125,8 +126,7 @@ const CameraComponent = ({
           ratio={"16:9"}
           onCameraReady={onCameraReady}
         >
-          {children}
-          {/* <View style={styles.topButtonContainer}>
+          <View style={styles.topButtonContainer}>
             <Pressable onPress={onClosePress} style={styles.closeButton}>
               <Image source={CloseIcon} />
             </Pressable>
@@ -155,7 +155,7 @@ const CameraComponent = ({
             <Pressable onPress={switchCamera} style={styles.flashButton}>
               <Image source={ChangeCameraIcon} />
             </Pressable>
-          </View> */}
+          </View>
         </Camera>
       )}
     </View>
