@@ -1,5 +1,5 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useReducer, useRef, useState } from "react";
 import {
   HORIZONTAL_MARGIN,
   SCREEN_HEIGHT,
@@ -12,14 +12,19 @@ import EditPostTextModal from "../components/EditPostTextModal";
 import DraggableText from "../components/DraggableText";
 import { Colors } from "../../../utils/styles";
 import { useNavigation } from "@react-navigation/native";
+import SongSelectionModal from "../components/SongSelectionModal";
+import StickerSelectionModal from "../components/StickerSelectionModal";
 
 const EditingScreen = ({ route }) => {
   const navigation = useNavigation();
   const { fileUri } = route.params;
   const [isTextModalVisible, setTextModalVisible] = useState(false);
+  const [isMusicModalVisible, setMusicModalVisible] = useState(false);
   const [displayText, setDisplayText] = useState("");
   const [displayColor, setDisplayColor] = useState(Colors.white);
   const [displayTextSize, setDisplayTextSize] = useState(20);
+  const songSelectionModalRef = useRef(null);
+  const stickerSelectionModalRef = useRef(null);
 
   const onClosePress = useCallback(() => {
     navigation.goBack();
@@ -32,6 +37,7 @@ const EditingScreen = ({ route }) => {
   const onCloseModalPress = useCallback(() => {
     setTextModalVisible(false);
   }, []);
+
   const onDoneTextEditingPress = useCallback(
     (textValue, selectedColor, selectedSize) => {
       setDisplayText(textValue);
@@ -41,6 +47,23 @@ const EditingScreen = ({ route }) => {
     },
     []
   );
+
+  const onMusicPress = useCallback(() => {
+    songSelectionModalRef?.current?.present();
+  }, []);
+
+  const onSongSelectionModalClosePress = useCallback(() => {
+    songSelectionModalRef?.current?.close();
+  }, []);
+
+  const onStickerPress = useCallback(() => {
+    stickerSelectionModalRef?.current?.present();
+  }, []);
+
+  const onStickerSelectionModalClosePress = useCallback(() => {
+    stickerSelectionModalRef?.current?.close();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Image
@@ -55,23 +78,37 @@ const EditingScreen = ({ route }) => {
           </Pressable>
         )}
       </View>
+      <View style={{ flex: 1 }}>
+        {displayText && !isTextModalVisible && (
+          <DraggableText
+            inputValue={displayText}
+            textColor={displayColor}
+            fontSize={displayTextSize}
+            onEditTextPress={onTextPress}
+          />
+        )}
+      </View>
       {!isTextModalVisible && (
         <View style={styles.bottomContainer}>
-          <EditingOptions onTextPress={onTextPress} />
+          <EditingOptions
+            onTextPress={onTextPress}
+            onMusicPress={onMusicPress}
+            onStickerPress={onStickerPress}
+          />
         </View>
-      )}
-      {displayText && !isTextModalVisible && (
-        <DraggableText
-          inputValue={displayText}
-          textColor={displayColor}
-          fontSize={displayTextSize}
-          onEditTextPress={onTextPress}
-        />
       )}
       <EditPostTextModal
         isModalVisible={isTextModalVisible}
         onCloseModalPress={onCloseModalPress}
         onDonePress={onDoneTextEditingPress}
+      />
+      <SongSelectionModal
+        songSelectionModalRef={songSelectionModalRef}
+        onClosePress={onSongSelectionModalClosePress}
+      />
+      <StickerSelectionModal
+        stickerSelectionModalRef={stickerSelectionModalRef}
+        onClosePress={onStickerSelectionModalClosePress}
       />
     </SafeAreaView>
   );

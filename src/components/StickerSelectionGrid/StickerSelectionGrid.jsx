@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundContainer: {
-    width: "25%",
+    width: "33.33%",
     borderRadius: 10,
     overflow: "hidden",
   },

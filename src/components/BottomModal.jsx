@@ -23,9 +23,8 @@ const BottomModal = ({
   onClose,
   containerStyle,
   bottomSheetContainerStyle,
+  snapPoints = ["80%"],
 }) => {
-  const snapPoints = ["80%"];
-
   /**
    * Renders the backdrop for the bottom modal.
    * @param {object} props - The props passed to the backdrop component.
