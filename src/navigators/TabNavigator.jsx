@@ -9,16 +9,14 @@ import AddIcon from "./../../assets/images/floating_add.png";
 import HomeIcon from "./../../assets/images/home.png";
 import ProfileIcon from "./../../assets/images/user.png";
 import GroupsIcon from "./../../assets/images/users.png";
+import CreatePostStackNavigator from "./CreatePostStackNavigator";
 import {
-  ROUTE_ADD_CONTENT,
   ROUTE_CREATE_POST_STACK_NAVIGATOR,
   ROUTE_GROUPS_SCREEN,
   ROUTE_HOME_SCREEN,
   ROUTE_NOTIFICATIONS_SCREEN,
   ROUTE_PROFILE_SCREEN,
 } from "./RouteNames";
-import CreatePostOptions from "../features/createPost/containers/CreatePostOptions";
-import CreatePostStackNavigator from "./CreatePostStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -54,6 +52,7 @@ const TabNavigator = (props) => {
           tabBarIcon: ({ color }) => (
             <TabBarOption imageIcon={HomeIcon} color={color} />
           ),
+          unmountOnBlur: true,
         }}
       />
 

@@ -1,20 +1,16 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { generateDummyVideoPosts } from "../../../services/generateRandomContent";
-import Feed from "../components/Feed";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FlatList, View } from "react-native";
+import { generateDummyVideoPosts } from "../../../services/generateRandomContent";
 import { SCREEN_HEIGHT } from "../../../utils/constants";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import Feed from "../components/Feed";
 
 const Favourites = ({ isFocused }) => {
-  const navigation = useNavigation();
   const [videos, setVideos] = useState(generateDummyVideoPosts(0, 10));
   const flatListRef = useRef(null);
-  const scrollOffsetRef = useRef(0);
   const tabBarHeight = useBottomTabBarHeight();
   const [currentVideoId, setCurrentVideoId] = useState(null);
-  const [activeTab, setActiveTab] = useState("favourites");
-  const [pauseVideo, setPauseVideo] = useState(false);
 
   /**
    * Load more videos.
@@ -43,19 +39,30 @@ const Favourites = ({ isFocused }) => {
       />
     );
   };
-  useEffect(() => {
-    // Autoplay the first video when the component mounts
+
+  // Function to pause the first video
+  const pauseFirstVideo = () => {
     if (videos.length > 0) {
-      setCurrentVideoId(videos[0].id);
-    } else {
       setCurrentVideoId(null);
     }
+  };
 
-    // Clean up and pause the videos when the component unmounts or loses focus
-    return () => {
-      setCurrentVideoId(null);
-    };
+  // Function to play the first video
+  const playFirstVideo = () => {
+    if (videos.length > 0) {
+      setCurrentVideoId(videos[0].id);
+    }
+  };
+
+  // Pause the first video when isFocused is false
+  useEffect(() => {
+    if (!isFocused) {
+      pauseFirstVideo();
+    } else {
+      playFirstVideo();
+    }
   }, [isFocused]);
+
   const handleScroll = useCallback(
     ({ nativeEvent }) => {
       const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;

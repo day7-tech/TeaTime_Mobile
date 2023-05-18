@@ -19,17 +19,16 @@ import { useIsFocused } from "@react-navigation/native";
 
 // Create two components to render as the two tabs
 // Create two components to render as the two tabs
-const FirstRoute = () => {
-  const isFocused = useIsFocused();
+const FirstRoute = ({ isFocused }) => {
   return <Moments isFocused={isFocused} />;
 };
 
-const SecondRoute = () => {
-  const isFocused = useIsFocused();
+const SecondRoute = ({ isFocused }) => {
   return <Favourites isFocused={isFocused} />;
 };
 
 const HomeScreen = ({ navigation }) => {
+  const isFocused = useIsFocused();
   // Set up state to track the selected tab
   const [index, setIndex] = React.useState(0);
   // Define an array of route objects, one for each tab
@@ -40,8 +39,11 @@ const HomeScreen = ({ navigation }) => {
 
   // Define a function to render the appropriate tab component based on the current index
   const renderScene = SceneMap({
-    moments: FirstRoute,
-    favourites: SecondRoute,
+    moments: useCallback(() => <FirstRoute isFocused={index === 1} />, [index]),
+    favourites: useCallback(
+      () => <SecondRoute isFocused={index === 0} />,
+      [index]
+    ),
   });
 
   // Define a function to render the tab bar

@@ -1,13 +1,11 @@
-import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { generateDummyVideoPosts } from "../../../services/generateRandomContent";
-import Feed from "../components/Feed";
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../utils/constants";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import { generateDummyVideoPosts } from "../../../services/generateRandomContent";
+import { SCREEN_HEIGHT } from "../../../utils/constants";
+import Feed from "../components/Feed";
 
 const Moments = ({ isFocused }) => {
-  const navigation = useNavigation();
   const [videos, setVideos] = React.useState(generateDummyVideoPosts(0, 10));
   const [currentVideoId, setCurrentVideoId] = useState(null);
 
@@ -26,7 +24,6 @@ const Moments = ({ isFocused }) => {
     ];
     setVideos(newVideos);
   };
-
   // Function to render a single video post
   const renderVideo = ({ item }) => {
     return (
@@ -39,18 +36,27 @@ const Moments = ({ isFocused }) => {
     );
   };
 
-  useEffect(() => {
-    // Autoplay the first video when the component mounts
+  // Function to pause the first video
+  const pauseFirstVideo = () => {
     if (videos.length > 0) {
-      setCurrentVideoId(videos[0].id);
-    } else {
       setCurrentVideoId(null);
     }
+  };
 
-    // Clean up and pause the videos when the component unmounts or loses focus
-    return () => {
-      setCurrentVideoId(null);
-    };
+  // Function to play the first video
+  const playFirstVideo = () => {
+    if (videos.length > 0) {
+      setCurrentVideoId(videos[0].id);
+    }
+  };
+
+  // Pause the first video when isFocused is false
+  useEffect(() => {
+    if (!isFocused) {
+      pauseFirstVideo();
+    } else {
+      playFirstVideo();
+    }
   }, [isFocused]);
 
   const handleScroll = useCallback(
