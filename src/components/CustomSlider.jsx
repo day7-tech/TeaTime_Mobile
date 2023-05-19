@@ -1,11 +1,19 @@
 import Slider from "@react-native-community/slider";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Pressable } from "react-native";
 
 import SliderBarImage from "../../assets/images/slider-bar.png";
 
-const CustomSlider = ({ value, onValueChange }) => {
+const CustomSlider = ({ value, onValueChange, onInteraction }) => {
   const handleValueChange = (val) => {
     onValueChange(val);
+  };
+
+  const handleSliderStart = () => {
+    onInteraction(true);
+  };
+
+  const handleSliderEnd = () => {
+    onInteraction(false);
   };
 
   const thumbSize = 20 + (value / 100) * 20; // Calculate the thumb size based on the slider value
@@ -15,7 +23,7 @@ const CustomSlider = ({ value, onValueChange }) => {
   );
 
   return (
-    <View style={styles.sliderContainer}>
+    <Pressable style={styles.sliderContainer} onPressIn={handleSliderStart}>
       <View style={styles.sliderTrack}>
         <Image source={SliderBarImage} style={styles.sliderBar} />
       </View>
@@ -30,8 +38,10 @@ const CustomSlider = ({ value, onValueChange }) => {
         thumbTintColor="#fff"
         thumbComponent={ThumbComponent}
         inverted // Use custom thumb component
+        onSlidingStart={handleSliderStart}
+        onSlidingComplete={handleSliderEnd}
       />
-    </View>
+    </Pressable>
   );
 };
 
@@ -42,6 +52,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "90deg" }],
     position: "absolute",
     width: 240,
+    padding: 20,
   },
   slider: {
     justifyContent: "center",
@@ -49,7 +60,7 @@ const styles = StyleSheet.create({
   },
   sliderTrack: {
     position: "absolute",
-    transform: [{ rotate: "-92deg" }],
+    transform: [{ rotate: "-93deg" }],
   },
   sliderBar: {
     height: 250,

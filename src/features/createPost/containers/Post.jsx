@@ -21,7 +21,10 @@ import FaceMasksIcon from "../../../../assets/images/face-masks.png";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import CameraComponent from "../components/CameraComponent";
-import { ROUTE_EDITING } from "../../../navigators/RouteNames";
+import {
+  ROUTE_EDITING,
+  ROUTE_GRADIENT_TEXT_POST,
+} from "../../../navigators/RouteNames";
 
 const Post = ({ onClosePress }) => {
   const navigation = useNavigation();
@@ -125,6 +128,9 @@ const Post = ({ onClosePress }) => {
     return <ActivityIndicator size="large" color="#fff" />;
   }
 
+  const gradientTestPost = () => {
+    navigation.navigate(ROUTE_GRADIENT_TEXT_POST);
+  };
   return (
     <View style={styles.container}>
       {isCameraEnabled && (
@@ -156,7 +162,7 @@ const Post = ({ onClosePress }) => {
             <Pressable onPress={switchCamera} style={styles.flashButton}>
               <Image source={ChangeCameraIcon} />
             </Pressable>
-            <Pressable onPress={toggleFlash} style={styles.flashButton}>
+            <Pressable onPress={gradientTestPost} style={styles.flashButton}>
               <Image source={FaceMasksIcon} />
             </Pressable>
           </View>
