@@ -14,6 +14,9 @@ import { Colors } from "../../../utils/styles";
 import { useNavigation } from "@react-navigation/native";
 import SongSelectionModal from "../components/SongSelectionModal";
 import StickerSelectionModal from "../components/StickerSelectionModal";
+import Stickers from "../../../utils/Stickers";
+import DraggableImage from "../../../components/DraggableImage";
+import FavImage from "../../../../assets/images/favourites.png";
 
 const EditingScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -25,6 +28,8 @@ const EditingScreen = ({ route }) => {
   const [displayTextSize, setDisplayTextSize] = useState(20);
   const songSelectionModalRef = useRef(null);
   const stickerSelectionModalRef = useRef(null);
+  const [selectedSong, setSelectedSong] = useState("");
+  const [selectedSticker, setSelectedSticker] = useState(null);
 
   const onClosePress = useCallback(() => {
     navigation.goBack();
@@ -64,6 +69,20 @@ const EditingScreen = ({ route }) => {
     stickerSelectionModalRef?.current?.close();
   }, []);
 
+  const onStickerSelectDonePress = useCallback((stickerKey) => {
+    onStickerSelectionModalClosePress();
+    setTimeout(() => {
+      setSelectedSticker(stickerKey);
+    }, 500);
+  }, []);
+
+  const onSongSelectDonePress = useCallback((song) => {
+    onSongSelectionModalClosePress();
+    setTimeout(() => {
+      setSelectedSong(song);
+    }, 500);
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Image
@@ -77,14 +96,25 @@ const EditingScreen = ({ route }) => {
             <Image source={CloseIcon} />
           </Pressable>
         )}
+        {selectedSong && (
+          <Pressable style={styles.songView} onPress={onMusicPress}>
+            <Image source={FavImage} style={styles.songImage} />
+          </Pressable>
+        )}
       </View>
-      <View style={{ flex: 1 }}>
+      <View style={{ flexGrow: 1, justifyContent: "center" }}>
         {displayText && !isTextModalVisible && (
           <DraggableText
             inputValue={displayText}
             textColor={displayColor}
             fontSize={displayTextSize}
             onEditTextPress={onTextPress}
+          />
+        )}
+        {selectedSticker && (
+          <DraggableImage
+            image={Stickers[selectedSticker]}
+            onImagePress={() => console.log("Image")}
           />
         )}
       </View>
@@ -105,10 +135,12 @@ const EditingScreen = ({ route }) => {
       <SongSelectionModal
         songSelectionModalRef={songSelectionModalRef}
         onClosePress={onSongSelectionModalClosePress}
+        onSongSelectDonePress={onSongSelectDonePress}
       />
       <StickerSelectionModal
         stickerSelectionModalRef={stickerSelectionModalRef}
         onClosePress={onStickerSelectionModalClosePress}
+        onStickerSelectDonePress={onStickerSelectDonePress}
       />
     </SafeAreaView>
   );
@@ -131,9 +163,21 @@ const styles = StyleSheet.create({
     padding: HORIZONTAL_MARGIN,
   },
   topContainer: {
-    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
   },
   bottomContainer: {
     marginBottom: 40,
+  },
+  songView: {
+    borderColor: Colors.white,
+    borderWidth: 2,
+    position: "absolute",
+    left: (SCREEN_WIDTH - 30) / 2,
+    borderRadius: 5,
+  },
+  songImage: {
+    width: 30,
+    height: 30,
   },
 });

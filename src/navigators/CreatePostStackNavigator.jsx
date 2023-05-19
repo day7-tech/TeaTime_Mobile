@@ -25,19 +25,6 @@ const CreatePostStackNavigator = () => {
         })}
       />
       <Stack.Screen
-        component={Notes}
-        name={ROUTE_NOTES}
-        options={({ navigation }) => ({
-          headerLeft: () => (
-            <Back
-              onPress={() => navigation.goBack()}
-              backArrowImage={BackIcon}
-            />
-          ),
-          headerShadowVisible: false,
-        })}
-      />
-      <Stack.Screen
         component={EditingScreen}
         name={ROUTE_EDITING}
         options={() => ({

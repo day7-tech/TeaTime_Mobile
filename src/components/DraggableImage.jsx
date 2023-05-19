@@ -1,18 +1,12 @@
 import React from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Image, Pressable, StyleSheet } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
-import Typography from "../../../components/Typography/Typography";
 
-const DraggableText = ({
-  inputValue,
-  textColor,
-  fontSize,
-  onEditTextPress,
-}) => {
+const DraggableImage = ({ image, onImagePress }) => {
   const offset = useSharedValue({ x: 0, y: 0 });
   const start = useSharedValue({ x: 0, y: 0 });
   const scale = useSharedValue(1);
@@ -65,17 +59,11 @@ const DraggableText = ({
     Gesture.Simultaneous(zoomGesture, rotateGesture)
   );
 
-  const textStyle = {
-    color: textColor,
-    fontSize: fontSize,
-    textAlign: "center",
-  };
-
   return (
-    <Animated.View style={[styles.draggableTextContainer, animatedStyles]}>
+    <Animated.View style={[styles.draggableImageContainer, animatedStyles]}>
       <GestureDetector gesture={composed}>
-        <Pressable onPress={onEditTextPress}>
-          <Typography style={[textStyle]}>{inputValue}</Typography>
+        <Pressable onPress={onImagePress}>
+          <Image source={image} style={styles.image} />
         </Pressable>
       </GestureDetector>
     </Animated.View>
@@ -83,17 +71,13 @@ const DraggableText = ({
 };
 
 const styles = StyleSheet.create({
-  draggableTextContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+  draggableImageContainer: {
+    position: "absolute",
   },
-  draggableText: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    textAlign: "center",
+  image: {
+    width: 100,
+    height: 100,
   },
 });
 
-export default DraggableText;
+export default DraggableImage;

@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
-import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { Audio } from "expo-av";
-import Typography from "../Typography/Typography";
-import PlayIcon from "../../../assets/images/play.png";
-import PauseIcon from "../../../assets/images/pause.png";
-import SongBackgroundImage from "../../../assets/images/song-background.png";
+import React, { useEffect, useRef, useState } from "react";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import CheckIcon from "../../../assets/images/check.png";
+import PauseIcon from "../../../assets/images/pause.png";
+import PlayIcon from "../../../assets/images/play.png";
+import SongBackgroundImage from "../../../assets/images/song-background.png";
+import Typography from "../Typography/Typography";
 
 function PlayOrPause({ isPlaying, size }) {
   return (

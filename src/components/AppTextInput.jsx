@@ -1,13 +1,5 @@
-import React, { FC } from "react";
-import {
-  StyleProp,
-  StyleSheet,
-  TextInput,
-  TextInputProps,
-  TextStyle,
-  View,
-  ViewStyle,
-} from "react-native";
+import React from "react";
+import { StyleSheet, TextInput, View } from "react-native";
 import { Colors } from "../utils/styles";
 
 const AppTextInput = ({
@@ -15,6 +7,8 @@ const AppTextInput = ({
   containerStyle,
   multiline,
   suffixComponent,
+  inputTextColor,
+  placeholderTextColor,
   ...otherProps
 }) => {
   return (
@@ -26,10 +20,14 @@ const AppTextInput = ({
       ]}
     >
       <TextInput
-        style={[styles.input, textStyle]}
-        placeholderTextColor={
-          otherProps.placeholderTextColor ?? Colors.darkGrey
-        }
+        style={[
+          styles.input,
+          textStyle,
+          multiline && styles.inputMultiline,
+          { color: inputTextColor },
+        ]}
+        multiline
+        placeholderTextColor={placeholderTextColor ?? Colors.darkGrey}
         selectionColor={Colors.primary}
         {...otherProps}
       />

@@ -1,15 +1,14 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Colors } from "../../../utils/styles";
 import { Camera } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Image, Pressable, StyleSheet, View } from "react-native";
+import ChangeCameraIcon from "../../../../assets/images/change-camera.png";
 import CloseIcon from "../../../../assets/images/close.png";
 import FlashLightIcon from "../../../../assets/images/light.png";
-import { HORIZONTAL_MARGIN } from "../../../utils/constants";
 import RecordVideoIcon from "../../../../assets/images/record-video.png";
+import { HORIZONTAL_MARGIN } from "../../../utils/constants";
+import { Colors } from "../../../utils/styles";
 import GalleryImages from "../components/GalleryImages";
-import * as ImagePicker from "expo-image-picker";
-import ChangeCameraIcon from "../../../../assets/images/change-camera.png";
-import CameraComponent from "../components/CameraComponent";
 
 const Video = ({ onClosePress }) => {
   const [isCameraEnabled, setIsCameraEnabled] = useState(false);

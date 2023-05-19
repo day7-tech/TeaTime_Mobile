@@ -1,25 +1,14 @@
-import { Platform, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Camera } from "expo-camera";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import BottomBarOptions from "../components/BottomBarOptions";
-import { Colors } from "../../../utils/styles";
+import React, { useCallback, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Typography from "../../../components/Typography/Typography";
+import { options } from "../../../utils/constants";
+import BottomBarOptions from "../components/BottomBarOptions";
+import Notes from "./Notes";
 import Post from "./Post";
 import Video from "./Video";
-import Notes from "./Notes";
-import { options } from "../../../utils/constants";
-import { ROUTE_NOTES } from "../../../navigators/RouteNames";
 
 const CreatePostOptions = ({ navigation }) => {
   const [postType, setPostType] = useState("post");
-
-  useEffect(() => {
-    if (postType === "notes") {
-      navigation.navigate(ROUTE_NOTES);
-    }
-  }, [postType]);
 
   const onClosePress = useCallback(() => {
     navigation.goBack();
@@ -31,8 +20,8 @@ const CreatePostOptions = ({ navigation }) => {
         return <Post onClosePress={onClosePress} />;
       case "video":
         return <Video onClosePress={onClosePress} />;
-      default:
-        return null;
+      case "notes":
+        return <Notes />;
     }
   }, []);
 

@@ -2,34 +2,6 @@ import React from "react";
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const styles = StyleSheet.create({
-  grid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  imageContainer: {
-    width: "100%",
-    aspectRatio: 1,
-    padding: 2,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
-  },
-  linearGradient: {
-    width: "100%",
-    flex: 1,
-  },
-  backgroundContainer: {
-    width: "33.33%",
-    borderRadius: 10,
-    overflow: "hidden",
-  },
-});
-
 function Sticker({ imageKey, setIsSelected, image }) {
   return (
     <TouchableOpacity
@@ -88,3 +60,31 @@ export default function StickerSelectionGrid({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  imageContainer: {
+    width: "100%",
+    aspectRatio: 1,
+    padding: 2,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
+  linearGradient: {
+    width: "100%",
+    flex: 1,
+  },
+  backgroundContainer: {
+    width: "33.33%",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+});

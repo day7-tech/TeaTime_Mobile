@@ -1,24 +1,21 @@
-import {
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import React, { useEffect, useRef, useState } from "react";
-import BottomModal from "../../../components/BottomModal";
-import { generateRandomMusic } from "../../../services/generateRandomContent";
-import Typography from "../../../components/Typography/Typography";
-import SongCard from "../../../components/Cards/SongCard";
-import CloseIcon from "../../../../assets/images/close.png";
-import { HORIZONTAL_MARGIN } from "../../../utils/constants";
 import { Audio } from "expo-av";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FlatList, Image, Pressable, StyleSheet, View } from "react-native";
+import CloseIcon from "../../../../assets/images/close.png";
+import BottomModal from "../../../components/BottomModal";
+import SongCard from "../../../components/Cards/SongCard";
+import Typography from "../../../components/Typography/Typography";
+import { generateRandomMusic } from "../../../services/generateRandomContent";
 
-const SongSelectionModal = ({ songSelectionModalRef, onClosePress }) => {
+const SongSelectionModal = ({
+  songSelectionModalRef,
+  onClosePress,
+  onSongSelectDonePress,
+}) => {
   const [songs] = useState(generateRandomMusic());
   const [playingSongId, setPlayingSongId] = useState("");
-  const [selectedSongId, setSelectedSongId] = useState("");
+  const [selectedSongId, setSelectedSongId] = useState(null);
+  const [selectedSong, setSelectedSong] = useState(null);
   const soundObject = useRef(new Audio.Sound()).current;
 
   useEffect(() => {
@@ -40,6 +37,19 @@ const SongSelectionModal = ({ songSelectionModalRef, onClosePress }) => {
     }
   };
 
+  const setIsSelected = useCallback(
+    (song) => {
+      if (selectedSongId === song.item.id) {
+        setSelectedSongId(null); // Deselect the song if already selected
+        setSelectedSong(null);
+      } else {
+        setSelectedSongId(song.item.id); // Select the song if not selected
+        setSelectedSong(song);
+      }
+    },
+    [selectedSongId]
+  );
+
   return (
     <BottomModal
       bottomSheetModalRef={songSelectionModalRef}
@@ -47,12 +57,19 @@ const SongSelectionModal = ({ songSelectionModalRef, onClosePress }) => {
       snapPoints={["100%"]}
     >
       <View>
-        <Pressable onPress={onClosePress} style={styles.closeButton}>
-          <Image source={CloseIcon} />
-        </Pressable>
+        <View style={styles.headerContainer}>
+          <Pressable onPress={onClosePress}>
+            <Image source={CloseIcon} />
+          </Pressable>
+          <Pressable onPress={() => onSongSelectDonePress(selectedSong)}>
+            <Typography style={styles.doneButton}>Done</Typography>
+          </Pressable>
+        </View>
         <Typography style={styles.text}>Choose a song for the post</Typography>
         <FlatList
           data={songs}
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
           renderItem={(song) => (
             <SongCard
               isPlaying={playingSongId === song.item.id}
@@ -67,7 +84,7 @@ const SongSelectionModal = ({ songSelectionModalRef, onClosePress }) => {
               name={song.item.name}
               details={song.item.details}
               isSelected={selectedSongId === song.item.id}
-              setIsSelected={() => setSelectedSongId(song.item.id)}
+              setIsSelected={() => setIsSelected(song)}
             />
           )}
           keyExtractor={(song) => song.id}
@@ -89,5 +106,21 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: "600",
     marginBottom: 20,
+  },
+  list: {
+    height: "100%",
+  },
+  listContent: {
+    paddingBottom: 100,
+  },
+  headerContainer: {
+    marginTop: 55,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  doneButton: {
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
