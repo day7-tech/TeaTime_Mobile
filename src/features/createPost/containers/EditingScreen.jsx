@@ -102,7 +102,13 @@ const EditingScreen = ({ route }) => {
           </Pressable>
         )}
       </View>
-      <View style={{ flexGrow: 1, justifyContent: "center" }}>
+      <View
+        style={{
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {displayText && !isTextModalVisible && (
           <DraggableText
             inputValue={displayText}

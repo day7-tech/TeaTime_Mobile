@@ -1,24 +1,22 @@
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  Text,
-  KeyboardAvoidingView,
+  Animated,
   Image,
   Keyboard,
+  KeyboardAvoidingView,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
   TouchableWithoutFeedback,
-  Slider,
+  View,
 } from "react-native";
-import React, { useState } from "react";
-import { Colors } from "../../../utils/styles";
-import Back from "../../../components/Navigation/Back";
-import BackIcon from "../../../../assets/images/back.png";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HORIZONTAL_MARGIN, SCREEN_WIDTH } from "../../../utils/constants";
+import BackIcon from "../../../../assets/images/back.png";
 import CustomSlider from "../../../components/CustomSlider";
-import { color } from "react-native-reanimated";
+import { HORIZONTAL_MARGIN } from "../../../utils/constants";
+import { Colors } from "../../../utils/styles";
 
 const EditPostTextModal = ({
   isModalVisible,
@@ -28,6 +26,9 @@ const EditPostTextModal = ({
   const [selectedColor, setSelectedColor] = useState(Colors.white);
   const [selectedSize, setSelectedSize] = useState(20);
   const [textValue, setTextValue] = useState("");
+  const sliderInteractionTimer = useRef(null);
+  const [isSliderInteracting, setIsSliderInteracting] = useState(false);
+  const sliderAnimation = useRef(new Animated.Value(0)).current;
 
   const handleTextChange = (text) => {
     setTextValue(text);
@@ -43,6 +44,33 @@ const EditPostTextModal = ({
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
+  };
+
+  useEffect(() => {
+    // Set the slider interaction to false after 15 seconds of inactivity
+    sliderInteractionTimer.current = setTimeout(() => {
+      handleSliderInteraction(false);
+    }, 8000);
+
+    return () => {
+      // Clear the timer on component unmount or re-render
+      clearTimeout(sliderInteractionTimer.current);
+    };
+  }, [isSliderInteracting]);
+
+  const handleSliderInteraction = (isInteracting) => {
+    setIsSliderInteracting(isInteracting);
+    Animated.timing(sliderAnimation, {
+      toValue: isInteracting ? 0 : -25,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+
+    // Reset the slider interaction timer
+    clearTimeout(sliderInteractionTimer.current);
+    sliderInteractionTimer.current = setTimeout(() => {
+      handleSliderInteraction(false);
+    }, 8000);
   };
 
   return (
@@ -82,10 +110,13 @@ const EditPostTextModal = ({
                   left: -120,
                 }}
               >
-                <CustomSlider
-                  value={selectedSize}
-                  onValueChange={handleSizeChange}
-                />
+                <Animated.View style={{ left: sliderAnimation }}>
+                  <CustomSlider
+                    value={selectedSize}
+                    onValueChange={handleSizeChange}
+                    onInteraction={handleSliderInteraction}
+                  />
+                </Animated.View>
               </View>
               <View
                 style={{

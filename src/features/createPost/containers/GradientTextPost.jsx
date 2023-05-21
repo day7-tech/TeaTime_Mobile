@@ -1,26 +1,24 @@
+import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  KeyboardAvoidingView,
+  Animated,
   Image,
   Keyboard,
-  TouchableWithoutFeedback,
-  Animated,
-  Pressable,
-  ViewBase,
+  KeyboardAvoidingView,
   PanResponder,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { Colors } from "../../../utils/styles";
-import BackIcon from "../../../../assets/images/back.png";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HORIZONTAL_MARGIN } from "../../../utils/constants";
+import BackIcon from "../../../../assets/images/back.png";
 import CustomSlider from "../../../components/CustomSlider";
-import { useNavigation } from "@react-navigation/native";
+import { HORIZONTAL_MARGIN } from "../../../utils/constants";
+import { Colors } from "../../../utils/styles";
 
 const GradientTextPost = ({}) => {
   const navigation = useNavigation();
@@ -150,9 +148,7 @@ const GradientTextPost = ({}) => {
           >
             <View style={styles.textContainer}>
               <View style={styles.sliderContainer}>
-                <Animated.View
-                  style={{ left: sliderAnimation, backgroundColor: "yellow" }}
-                >
+                <Animated.View style={{ left: sliderAnimation }}>
                   <CustomSlider
                     value={selectedSize}
                     onValueChange={handleSizeChange}
