@@ -17,10 +17,11 @@ import StickerSelectionModal from "../components/StickerSelectionModal";
 import Stickers from "../../../utils/Stickers";
 import DraggableImage from "../../../components/DraggableImage";
 import FavImage from "../../../../assets/images/favourites.png";
+import { Video } from "expo-av";
 
 const EditingScreen = ({ route }) => {
   const navigation = useNavigation();
-  const { fileUri } = route.params;
+  const { fileUri, mediaType } = route.params;
   const [isTextModalVisible, setTextModalVisible] = useState(false);
   const [isMusicModalVisible, setMusicModalVisible] = useState(false);
   const [displayText, setDisplayText] = useState("");
@@ -85,11 +86,21 @@ const EditingScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={{ uri: fileUri }}
-        style={styles.media}
-        resizeMode="cover"
-      />
+      {mediaType === "image" ? (
+        <Image
+          source={{ uri: fileUri }}
+          style={styles.media}
+          resizeMode="cover"
+        />
+      ) : (
+        <Video
+          source={{ uri: fileUri }}
+          style={styles.media}
+          resizeMode="cover"
+          shouldPlay={true} // Set to false to pause the video initially
+          isLooping={true}
+        />
+      )}
       <View style={styles.topContainer}>
         {!isTextModalVisible && (
           <Pressable onPress={onClosePress} style={styles.closeButton}>

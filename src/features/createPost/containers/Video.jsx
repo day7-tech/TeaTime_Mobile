@@ -9,8 +9,11 @@ import RecordVideoIcon from "../../../../assets/images/record-video.png";
 import { HORIZONTAL_MARGIN } from "../../../utils/constants";
 import { Colors } from "../../../utils/styles";
 import GalleryImages from "../components/GalleryImages";
+import { useNavigation } from "@react-navigation/native";
+import { ROUTE_EDITING } from "../../../navigators/RouteNames";
 
 const Video = ({ onClosePress }) => {
+  const navigation = useNavigation();
   const [isCameraEnabled, setIsCameraEnabled] = useState(false);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
@@ -20,6 +23,7 @@ const Video = ({ onClosePress }) => {
   const [micPermission, requestMicPermission] =
     Camera.useMicrophonePermissions();
   const [isLoading, setIsLoading] = useState(true);
+  const [isRecording, setIsRecording] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       // Enable the camera when the screen is focused
@@ -69,20 +73,39 @@ const Video = ({ onClosePress }) => {
     }
   };
 
+  const goToPreviewScreen = (tempFileUri) => {
+    navigation.navigate(ROUTE_EDITING, {
+      fileUri: tempFileUri,
+      mediaType: "video",
+    });
+  };
+
   const startRecording = async () => {
     if (cameraRef.current && isCameraEnabled) {
       const options = {
         quality: Camera.Constants.VideoQuality["720p"],
         maxDuration: 60,
       };
-      const data = await cameraRef.current.recordAsync(options);
-      // Handle the recorded video data here
+
+      setIsRecording(true); // Set the recording state to true
+
+      try {
+        const data = await cameraRef.current.recordAsync(options);
+        // Handle the recorded video data here
+        const { uri } = data; // Get the file URI from the recorded video data
+        goToPreviewScreen(uri); // Navigate to the preview screen with the file URI
+      } catch (error) {
+        console.log("Error while recording:", error);
+      } finally {
+        setIsRecording(false); // Set the recording state back to false
+      }
     }
   };
 
   const stopRecording = () => {
     if (cameraRef.current && isCameraEnabled) {
       cameraRef.current.stopRecording();
+      setIsRecording(false); // Set the recording state to false
     }
   };
 
@@ -120,7 +143,10 @@ const Video = ({ onClosePress }) => {
               onPressOut={stopRecording}
               style={styles.flashButton}
             >
-              <Image source={RecordVideoIcon} />
+              <Image
+                source={RecordVideoIcon}
+                style={isRecording ? styles.recordIconSmall : styles.recordIcon}
+              />
             </Pressable>
             <Pressable onPress={switchCamera} style={styles.flashButton}>
               <Image source={ChangeCameraIcon} />
@@ -150,5 +176,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     marginBottom: 10,
+  },
+  recordIcon: {
+    width: 50,
+    height: 50,
+  },
+  recordIconSmall: {
+    width: 30,
+    height: 30,
   },
 });

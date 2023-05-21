@@ -115,7 +115,10 @@ const Post = ({ onClosePress }) => {
       const options = { quality: 0.5, base64: true };
       const data = await cameraRef.current.takePictureAsync(options);
       const tempFileUri = await saveFileToLocal(data.uri);
-      navigation.navigate(ROUTE_EDITING, { fileUri: tempFileUri });
+      navigation.navigate(ROUTE_EDITING, {
+        fileUri: tempFileUri,
+        mediaType: "image",
+      });
     }
   };
 
