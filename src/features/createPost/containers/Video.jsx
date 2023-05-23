@@ -145,7 +145,7 @@ const Video = ({ onClosePress }) => {
             >
               <Image
                 source={RecordVideoIcon}
-                style={isRecording ? styles.recordIconSmall : styles.recordIcon}
+                style={isRecording && styles.recordIconSmall}
               />
             </Pressable>
             <Pressable onPress={switchCamera} style={styles.flashButton}>
@@ -177,10 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     marginBottom: 10,
   },
-  recordIcon: {
-    width: 50,
-    height: 50,
-  },
+
   recordIconSmall: {
     width: 30,
     height: 30,

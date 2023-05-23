@@ -154,7 +154,7 @@ const Post = ({ onClosePress }) => {
           </View>
           <View style={styles.bottomButtonContainer}>
             <Pressable onPress={pickImage}>
-              <GalleryImages />
+              <GalleryImages mediaType="photo" />
             </Pressable>
             <Pressable onPress={toggleFlash} style={styles.flashButton}>
               <Image source={FlashLightIcon} />

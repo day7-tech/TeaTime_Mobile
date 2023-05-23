@@ -82,7 +82,6 @@ const GradientTextPost = ({}) => {
   };
 
   const onDonePress = () => {
-    console.log("Done");
     navigation.goBack();
   };
 

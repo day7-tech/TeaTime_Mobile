@@ -18,6 +18,7 @@ import Stickers from "../../../utils/Stickers";
 import DraggableImage from "../../../components/DraggableImage";
 import FavImage from "../../../../assets/images/favourites.png";
 import { Video } from "expo-av";
+import TrimVideoModal from "../components/TrimVideoModal";
 
 const EditingScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -29,6 +30,7 @@ const EditingScreen = ({ route }) => {
   const [displayTextSize, setDisplayTextSize] = useState(20);
   const songSelectionModalRef = useRef(null);
   const stickerSelectionModalRef = useRef(null);
+  const trimVideoModalRef = useRef(null);
   const [selectedSong, setSelectedSong] = useState("");
   const [selectedSticker, setSelectedSticker] = useState(null);
 
@@ -82,6 +84,14 @@ const EditingScreen = ({ route }) => {
     setTimeout(() => {
       setSelectedSong(song);
     }, 500);
+  }, []);
+
+  const onTrimVideoModalPress = useCallback(() => {
+    trimVideoModalRef?.current?.present();
+  }, []);
+
+  const onCancelTrimVideoModalPress = useCallback(() => {
+    trimVideoModalRef?.current?.close();
   }, []);
 
   return (
@@ -141,6 +151,8 @@ const EditingScreen = ({ route }) => {
             onTextPress={onTextPress}
             onMusicPress={onMusicPress}
             onStickerPress={onStickerPress}
+            onTrimPress={onTrimVideoModalPress}
+            mediaType={mediaType}
           />
         </View>
       )}
@@ -158,6 +170,11 @@ const EditingScreen = ({ route }) => {
         stickerSelectionModalRef={stickerSelectionModalRef}
         onClosePress={onStickerSelectionModalClosePress}
         onStickerSelectDonePress={onStickerSelectDonePress}
+      />
+      <TrimVideoModal
+        trimVideoModalRef={trimVideoModalRef}
+        fileUri={fileUri}
+        onCancelTrimVideoModalPress={onCancelTrimVideoModalPress}
       />
     </SafeAreaView>
   );

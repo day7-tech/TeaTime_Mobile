@@ -16,7 +16,7 @@ const EditingOptions = ({
   onAIMagicPress,
   onStickerPress,
   onTextPress,
-  isVideoEditing,
+  mediaType,
   onTrimPress,
 }) => {
   return (
@@ -56,7 +56,7 @@ const EditingOptions = ({
         style={styles.optionContainer}
         onPress={onStickerPress}
       />
-      {isVideoEditing && (
+      {mediaType === "video" && (
         <FeedOption
           label={"Trim"}
           imageIcon={TrimIcon}

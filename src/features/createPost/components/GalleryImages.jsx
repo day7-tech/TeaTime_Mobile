@@ -11,7 +11,7 @@ const GalleryImages = ({ mediaType = "photo" }) => {
       const { status } = await MediaLibrary.requestPermissionsAsync();
       if (status === "granted") {
         const media = await MediaLibrary.getAssetsAsync({
-          mediaType: "",
+          mediaType: mediaType,
         });
         setPhotos(media.assets.slice(0, 1)); // limit to the 3 most recent photos
       }
