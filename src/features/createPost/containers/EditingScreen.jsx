@@ -19,6 +19,7 @@ import DraggableImage from "../../../components/DraggableImage";
 import FavImage from "../../../../assets/images/favourites.png";
 import { Video } from "expo-av";
 import TrimVideoModal from "../components/TrimVideoModal";
+import FiltersModal from "../components/FiltersModal";
 
 const EditingScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -31,8 +32,10 @@ const EditingScreen = ({ route }) => {
   const songSelectionModalRef = useRef(null);
   const stickerSelectionModalRef = useRef(null);
   const trimVideoModalRef = useRef(null);
+  const filtersModalRef = useRef(null);
   const [selectedSong, setSelectedSong] = useState("");
   const [selectedSticker, setSelectedSticker] = useState(null);
+  const [isVideoPlay, setIsVideoPlay] = useState(true);
 
   const onClosePress = useCallback(() => {
     navigation.goBack();
@@ -94,6 +97,16 @@ const EditingScreen = ({ route }) => {
     trimVideoModalRef?.current?.close();
   }, []);
 
+  const onFiltersModalPress = useCallback(() => {
+    setIsVideoPlay(false);
+    filtersModalRef?.current?.present();
+  }, []);
+
+  const onCloseFiltersModalPress = useCallback(() => {
+    setIsVideoPlay(true);
+    filtersModalRef?.current?.close();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       {mediaType === "image" ? (
@@ -107,7 +120,7 @@ const EditingScreen = ({ route }) => {
           source={{ uri: fileUri }}
           style={styles.media}
           resizeMode="cover"
-          shouldPlay={true} // Set to false to pause the video initially
+          shouldPlay={isVideoPlay} // Set to false to pause the video initially
           isLooping={true}
         />
       )}
@@ -152,6 +165,7 @@ const EditingScreen = ({ route }) => {
             onMusicPress={onMusicPress}
             onStickerPress={onStickerPress}
             onTrimPress={onTrimVideoModalPress}
+            onFiltersPress={onFiltersModalPress}
             mediaType={mediaType}
           />
         </View>
@@ -175,6 +189,12 @@ const EditingScreen = ({ route }) => {
         trimVideoModalRef={trimVideoModalRef}
         fileUri={fileUri}
         onCancelTrimVideoModalPress={onCancelTrimVideoModalPress}
+      />
+      <FiltersModal
+        filtersModalRef={filtersModalRef}
+        fileUri={fileUri}
+        onCloseModalPress={onCloseFiltersModalPress}
+        mediaType={mediaType}
       />
     </SafeAreaView>
   );
