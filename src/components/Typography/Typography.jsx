@@ -15,13 +15,16 @@ export default function Typography({ style, ...props }) {
         return "Outfit-Thin";
       case "light":
       case 300:
+      case 400:
         return "Outfit-Light";
       case "medium":
       case 500:
       case 600:
         return "Outfit-Medium";
-      case "bold":
       case 700:
+      case 800:
+      case 900:
+      case "bold":
         return "Outfit-Bold";
       default:
         return "Outfit-Regular";

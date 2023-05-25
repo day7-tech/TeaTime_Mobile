@@ -17,17 +17,29 @@ import { HORIZONTAL_MARGIN, SCREEN_WIDTH } from "../../../utils/constants";
 import { ROUTE_RECOGNITION_SUCCESS_SCREEN } from "../../../navigators/RouteNames";
 import { Colors } from "../../../utils/styles";
 
+/**
+ * Component that renders the screen for sending a recognition sticker.
+ * @param {object} route - The route object passed from the navigator.
+ * @param {object} navigation - The navigation object provided by the navigator.
+ * @returns {JSX.Element} - The SendRecognitionSticker component.
+ */
 const SendRecognitionSticker = ({ route, navigation }) => {
   const { post, sticker } = route.params;
 
+  /**
+   * Function that dismisses the keyboard and navigates to the recognition success screen.
+   */
   const send = useCallback(() => {
     Keyboard.dismiss();
     navigation.navigate(ROUTE_RECOGNITION_SUCCESS_SCREEN, { post });
   }, [navigation]);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
+        {/* Title of the screen */}
         <Typography style={styles.title}>Sending your sticker</Typography>
+        {/* Container for the recognition sticker image */}
         <View style={styles.imageContainer}>
           <Image source={Stickers[sticker]} style={styles.stickerImage} />
         </View>
@@ -41,6 +53,7 @@ const SendRecognitionSticker = ({ route, navigation }) => {
               marginHorizontal: HORIZONTAL_MARGIN,
             }}
           >
+            {/* Container for the input text */}
             <View style={styles.inputTextContainer}>
               <TextInput
                 style={styles.input}
@@ -49,8 +62,10 @@ const SendRecognitionSticker = ({ route, navigation }) => {
                 multiline={true}
                 numberOfLines={4}
               />
+              {/* Optional text to explain the input field */}
               <Typography style={styles.optionalText}>Optional</Typography>
             </View>
+            {/* Button to send the recognition sticker */}
             <View>
               <GradientBtn btnInfo="Send" btnTextColor="white" onPress={send} />
             </View>

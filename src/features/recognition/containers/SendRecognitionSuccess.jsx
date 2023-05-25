@@ -5,8 +5,15 @@ import UserCard from "../../../components/UserCard/UserCard";
 import Typography from "../../../components/Typography/Typography";
 import { ROUTE_TAB_NAVIGATOR } from "../../../navigators/RouteNames";
 
+/**
+ * Component that renders the screen for successful recognition sending.
+ * @param {object} route - The route object passed from the navigator.
+ * @param {object} navigation - The navigation object provided by the navigator.
+ * @returns {JSX.Element} - The SendRecognitionSuccess component.
+ */
 const SendRecognitionSuccess = ({ route, navigation }) => {
   const { post } = route.params;
+
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.navigate(ROUTE_TAB_NAVIGATOR); // Navigate to the top of the stack
@@ -14,6 +21,7 @@ const SendRecognitionSuccess = ({ route, navigation }) => {
 
     return () => clearTimeout(timer);
   }, []);
+
   return (
     <Success
       subtitle="Recognition sent to"
