@@ -15,8 +15,10 @@ import {
   ROUTE_GROUPS_SCREEN,
   ROUTE_HOME_SCREEN,
   ROUTE_NOTIFICATIONS_SCREEN,
+  ROUTE_PROFILE_NAVIGATOR,
   ROUTE_PROFILE_SCREEN,
 } from "./RouteNames";
+import ProfileStackNavigator from "./ProfileStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,7 +37,7 @@ const TabNavigator = (props) => {
           justifyContent: "center",
           alignItems: "center",
           paddingHorizontal: 3,
-          paddingTop: 10
+          paddingTop: 10,
         },
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: Colors.white,
@@ -103,9 +105,10 @@ const TabNavigator = (props) => {
 
       {/* Notifications Tab */}
       <Tab.Screen
-        component={HomeScreen}
-        name={ROUTE_PROFILE_SCREEN}
+        component={ProfileStackNavigator}
+        name={ROUTE_PROFILE_NAVIGATOR}
         options={{
+          headerShown: false,
           tabBarLabel: ({ color }) => (
             <Typography style={{ color: color, fontSize: 10 }}>
               Profile
