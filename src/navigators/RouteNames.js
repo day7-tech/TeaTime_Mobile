@@ -18,3 +18,5 @@ export const ROUTE_CREATE_POST_STACK_NAVIGATOR = "create_post_stack_navigator";
 export const ROUTE_CREATE_POST_OPTIONS = "create_post_options";
 export const ROUTE_GRADIENT_TEXT_POST = "gradient_text_post";
 export const ROUTE_EDITING = "editing";
+export const ROUTE_PROFILE_NAVIGATOR = "profile_navigator";
+export const ROUTE_SETTINGS = "settings";
